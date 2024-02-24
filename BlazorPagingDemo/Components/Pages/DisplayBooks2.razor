@@ -1,0 +1,63 @@
+﻿@page "/display-books2"
+
+@using BlazorPagingDemo.Components.Pages.Tools.TTable
+@using BlazorPagingDemo.Data
+@using BlazorPagingDemo.Services
+
+@inject BookService BookService
+@inject IGenericService<Book,MyDbContext> GenericService
+
+<h2 class="bg-success text-white">Books-Pagination Test 2</h2>
+
+
+<TTable entities="allBooks?.ToList()" models="ModelList" />
+
+
+@code {     
+
+    private IEnumerable<Book>? allBooks = null;
+    private IEnumerable<Book> books = Enumerable.Empty<Book>();    
+
+    public List<Book> BookList { get; set; } = new List<Book>();    
+    public List<string> ModelList { get; set; } = new List<string> { "Title", "Author" };
+
+    protected async override Task OnInitializedAsync()
+    {
+        await GetBooks();
+    }
+
+    // private void SelectedPage(int selectedPageIndex)
+    // {
+    // if (allBooks != null)
+    // {
+    //     State!.PageIndex = selectedPageIndex;
+    //     var skipCount = itemsPerPage * (State.PageIndex - 1);
+    //     books = allBooks.Skip(skipCount).Take(itemsPerPage);
+    // }
+    // }
+
+    private async Task GetBooks()
+    {
+        BookService.AddRandomBooks(500);
+        // Initialize State if it's null
+        //State = State ?? new PageIndexStateProvider();
+         allBooks = await GenericService.GetAllAsync();
+
+        // if (allBooks != null)
+        // {
+        //     // Initialize the number of "totalPages"
+        //     totalPages = (int)(allBooks.Count() / itemsPerPage);
+
+        //     // Initialize the "books" which will be displayed when the page loaded first time.
+        //     if (State == null)
+        //     {
+        //         throw new Exception("State is null");
+        //     }
+        //     var skipCount = itemsPerPage * (State.PageIndex - 1);
+
+        //     books = allBooks.Skip(skipCount).Take(itemsPerPage).ToList();
+        // }
+    }
+
+    
+}

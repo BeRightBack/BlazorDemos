@@ -1,0 +1,472 @@
+﻿@page "/users"
+@inject NavigationManager NavigationManager
+
+@using System.ComponentModel.DataAnnotations
+@using System.Text
+@using System.Text.Encodings.Web
+@using BlazorLayoutDemo.Components.Account
+@using BlazorLayoutDemo.Components.Account.Pages
+@using BlazorLayoutDemo.Components.Account.Shared
+@using BlazorLayoutDemo.Components.Pages.Tools
+@using BlazorLayoutDemo.Entity
+@using BlazorLayoutDemo.Services
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.WebUtilities
+@using BlazorLayoutDemo.Data
+@using Microsoft.AspNetCore.Authorization
+
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<ApplicationRole> RoleManager
+@inject IUserStore<ApplicationUser> UserStore
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
+
+<h1>Users Administration</h1>
+
+<AuthorizeView>
+    <Authorized>
+        @if (@context.User.IsInRole(ADMINISTRATION_ROLE))
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>User Name</th>
+                        <th>Email</th>
+                        <th>FirstName</th>
+                        <th>LastName</th>
+                        <th>EmailConfirmed</th>
+                        <th>PhoneConfirmed</th>
+                        <th>IsActive</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                <Paging TotalItemCount="@totalUsers" ItemsPerPage="10" CurrentPage="@currentPage" OnPageChanged="HandlePageChanged" />
+                @foreach (var user in ColUsers.Skip((currentPage - 1) * 10).Take(10))
+                    {
+                        <tr>
+                            <td><input type="checkbox" @bind="@user.Selected" /></td>
+                            <td>@user.UserName</td>
+                            <td>@user.Email</td>
+                            <td>@user.FirstName</td>
+                            <td>@user.LastName</td>
+                            <td>@user.EmailConfirmed</td>
+                            <td>@user.PhoneNumberConfirmed</td>
+                            <td>@user.IsActive</td>
+                            <td>
+                                <!-- Edit the current forecast -->
+                                <button class="btn btn-sm btn-primary"
+                                        @onclick="(() => EditUser(user))">
+                                    Edit
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            
+            @if (ShowPopup)
+            {
+                <!-- This is the popup to create or edit a user -->
+                <div class="modal" tabindex="-1" style="display:block" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Create or Edit account.</h3>
+                                <!-- Button to close the popup -->
+                                <button type="button" class="close"
+                                        @onclick="ClosePopup">
+                                    <span aria-hidden="true">X</span>
+                                </button>
+                            </div>
+                            <!-- Edit form for the current forecast -->
+                            <div class="modal-body">
+                                <!-- Only show Id if not a new user -->
+                                @if (Input.Id != null)
+                                {
+                                    <p>@Input.Id</p>
+                                }
+                                <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="async (editContext) => await RegisterUser(editContext)" Context="editContext">
+                                    <DataAnnotationsValidator />
+                                    <ValidationSummary class="text-danger" role="alert" />
+                                    <div class="form-floating mb-3">
+                                        <InputText @bind-Value="Input.UserName" class=" form-control form-control-sm " autocomplete="username" aria-required="true" placeholder="username" />
+                                        <label for="username">Username</label>
+                                        <ValidationMessage For="() => Input.UserName" class="text-danger" />
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <InputText @bind-Value="Input.FirstName" class="form-control form-control-sm" autocomplete="given-name" aria-required="true" placeholder="first name" />
+                                        <label for="first-name">First Name</label>
+                                        <ValidationMessage For="() => Input.FirstName" class="text-danger" />
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <InputText @bind-Value="Input.LastName" class="form-control form-control-sm" autocomplete="family-name" aria-required="true" placeholder="last name" />
+                                        <label for="last-name">Last Name</label>
+                                        <ValidationMessage For="() => Input.LastName" class="text-danger" />
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <InputText @bind-Value="Input.Email" class="form-control form-control-sm" autocomplete="email" aria-required="true" placeholder="email" />
+                                        <label for="email">Email</label>
+                                        <ValidationMessage For="() => Input.Email" class="text-danger" />
+                                    </div>
+                                    @if (Input.Id != null)
+                                    {
+                                        <div class="form-floating mb-3">
+                                            <InputText type="password" @bind-Value="Input.Password" class="form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="password" />
+                                            <label for="password">Password</label>
+                                            <ValidationMessage For="() => Input.Password" class="text-danger" />
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <InputText type="hidden" @bind-Value="Input.Password" class="form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="password" />
+                                            <label for="confirm-password">Confirm Password</label>
+                                            <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-floating mb-3">
+                                            <InputText type="password" @bind-Value="Input.Password" class="form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="password" />
+                                            <label for="password">Password</label>
+                                            <ValidationMessage For="() => Input.Password" class="text-danger" />
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <InputText type="password" @bind-Value="Input.ConfirmPassword" class="form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="password" />
+                                            <label for="confirm-password">Confirm Password</label>
+                                            <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
+                                        </div>
+                                    }
+                                    <div class="form-floating mb-3">
+                                        <InputText @bind-Value="Input.PhoneNumber" class="form-control form-control-sm" autocomplete="phone-number" placeholder="Please enter your phone number." />
+                                        <label for="phone-number" class="form-label">Phone number</label>
+                                        <ValidationMessage For="() => Input.PhoneNumber" class="text-danger" />
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <InputCheckbox @bind-Value="Input.EmailConfirmed" class="form-check-input" />
+                                        <label for="email-confirmed" class="col-form-label">Email Confirmed</label>
+                                        <ValidationMessage For="() => Input.EmailConfirmed" class="text-danger" />
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <InputCheckbox @bind-Value="Input.PhoneNumberConfirmed" class="form-check-input" />
+                                        <label for="phone-number-confirmed" class="col-form-label">PhoneNumber Confirmed</label>
+                                        <ValidationMessage For="() => Input.PhoneNumberConfirmed" class="text-danger" />
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <InputCheckbox @bind-Value="Input.IsActive" class="form-check-input" />
+                                        <label for="is-active" class="col-form-label">IsActive</label>
+                                        <ValidationMessage For="() => Input.IsActive" class="text-danger" />
+                                    </div>
+                                    <br />
+                                    <label for="UserRole">Role</label>
+                                    <select class="form-control"
+                                            @bind="@CurrentUserRole">
+                                        @foreach (var option in Options)
+                                        {
+
+                                            <option value="@option">
+
+
+                                                @option
+                                            </option>
+                                        }
+                                    </select>
+                                    <br /><br />
+
+                                    <button type="submit" class="w-100 btn btn-sm btn-primary">Register</button>
+                                    @if (Input.Id != null)
+                                    {
+                                        <button @onclick="DeleteUser" type="button" class="w-100 btn btn-sm btn-danger">Delete</button>
+                                    }
+
+                                </EditForm>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <button class="btn btn-sm btn-success" @onclick="AddNewUser">Add User</button>
+            <button class="btn btn-sm btn-danger" @onclick="DeleteSelected">Delete Selected</button>
+
+            <br />
+
+            <br />
+        }
+        else
+        {
+            <p>You're not signed in as a user in @ADMINISTRATION_ROLE.</p>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>You're not loggged in.</p>
+    </NotAuthorized>
+</AuthorizeView>
+<div class="row">
+    <div class="col-md-4">
+    </div>
+
+</div>
+
+@code {
+    private IEnumerable<IdentityError>? identityErrors;
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationStateTask { get; set; }
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+
+    [SupplyParameterFromQuery]
+    private string? ReturnUrl { get; set; }
+
+    private string? Message => identityErrors is null ? null : $"Error: {string.Join(", ", identityErrors.Select(error => error.Description))}";
+
+    private string ADMINISTRATION_ROLE = "Administrator";
+    System.Security.Claims.ClaimsPrincipal? CurrentUser;
+    string CurrentUserRole { get; set; } = "User";
+    List<ApplicationUser> ColUsers = new List<ApplicationUser>();
+    List<string> Options = new List<string>() { "User", "Administrator" };
+    bool ShowPopup = false;
+
+    private int totalUsers;
+    private int currentPage = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var RoleResult = await RoleManager.FindByNameAsync(ADMINISTRATION_ROLE);
+        if (RoleResult == null)
+        {
+            // Create ADMINISTRATION_ROLE Role
+            await RoleManager.CreateAsync(new ApplicationRole(ADMINISTRATION_ROLE));
+        }
+        // Ensure a user named admin@example.com is an Administrator
+        var user = await UserManager.FindByNameAsync("admin@example.com");
+        if (user != null)
+        {
+            // Is admin@example.com in administrator role?
+            var UserResult = await UserManager.IsInRoleAsync(user, ADMINISTRATION_ROLE);
+            if (!UserResult)
+            {
+                // Put admin in Administrator role
+                await UserManager.AddToRoleAsync(user, ADMINISTRATION_ROLE);
+            }
+        }
+
+        // Get the current logged in user
+        CurrentUser = (await authenticationStateTask!).User;
+
+        GetUsers();
+    }
+
+    public void GetUsers()
+    {
+        var users = UserManager.Users.ToList();
+        totalUsers = users.Count;
+        ColUsers = users;
+    }
+    private void HandlePageChanged(int newPage)
+    {
+        currentPage = newPage;  
+    }
+
+    public async Task RegisterUser(EditContext editContext)
+    {
+        //var user = new ApplicationUser();
+        if (Input.Id == null)
+        {
+            var user = new ApplicationUser
+                {
+                    UserName = Input.UserName,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    Email = Input.Email,
+                    PhoneNumber = Input.PhoneNumber,
+                    EmailConfirmed = Input.EmailConfirmed,
+                    PhoneNumberConfirmed = Input.PhoneNumberConfirmed,
+                    IsActive = Input.IsActive
+                };
+
+            await UserStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
+            var emailStore = GetEmailStore();
+            await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+            var result = await UserManager.CreateAsync(user, Input.Password);
+
+            if (!result.Succeeded)
+            {
+                identityErrors = result.Errors;
+                return;
+            }
+        }
+        else
+        {
+            var user = await UserManager.FindByIdAsync(Input.Id!);
+            if (user != null)
+            {
+                user.UserName = Input.UserName;
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                user.Email = Input.Email;
+                user.PhoneNumber = Input.PhoneNumber;
+                user.EmailConfirmed = Input.EmailConfirmed;
+                user.PhoneNumberConfirmed = Input.PhoneNumberConfirmed;
+                user.IsActive = Input.IsActive;
+                var result = await UserManager.UpdateAsync(user);
+                if (!result.Succeeded)
+                {
+                    identityErrors = result.Errors;
+                    return;
+                }
+            }
+            if (Input.Password != "*****")
+            {
+                var resetToken = await UserManager.GeneratePasswordResetTokenAsync(user!);
+
+                var passworduser = await UserManager.ResetPasswordAsync(user!, resetToken, Input.Password);
+
+                if (!passworduser.Succeeded)
+                {
+                    if (passworduser.Errors.FirstOrDefault() != null)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+
+                    // Keep the popup opened
+                    return;
+                }
+            }
+        }
+        var _user = await UserManager.FindByNameAsync(Input.UserName!);
+        if (CurrentUserRole == ADMINISTRATION_ROLE)
+        {
+            // Put admin in Administrator role
+            await UserManager.AddToRoleAsync(_user!, ADMINISTRATION_ROLE);
+        }
+        else
+        {
+            // Remove admin from Administrator role
+            await UserManager.RemoveFromRoleAsync(_user!, ADMINISTRATION_ROLE);
+        }
+
+        ShowPopup = false;
+        GetUsers();
+    }
+
+    public async Task DeleteUser()
+    {
+        ShowPopup = false;
+
+        var user = await UserManager.FindByIdAsync(Input.Id!);
+        if (user != null)
+        {
+            await UserManager.DeleteAsync(user);
+        }
+
+        GetUsers();
+    }
+
+    public void ClosePopup()
+    {
+        ShowPopup = false;
+    }
+
+    public async Task DeleteSelected()
+    {
+        var selectedUsers = ColUsers.Where(p => p.Selected).ToList();
+        foreach (var _user in selectedUsers!)
+        {
+            var del_user = await UserManager.FindByIdAsync(_user.Id);
+            if (del_user != null)
+            {
+                await UserManager.DeleteAsync(del_user);
+            }
+        }
+
+        GetUsers();
+    }
+    private ApplicationUser CreateUser()
+    {
+        try
+        {
+            return Activator.CreateInstance<ApplicationUser>();
+        }
+        catch
+        {
+            throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
+                $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor.");
+        }
+    }
+
+    private IUserEmailStore<ApplicationUser> GetEmailStore()
+    {
+        if (!UserManager.SupportsUserEmail)
+        {
+            throw new NotSupportedException("The default UI requires a user store with email support.");
+        }
+        return (IUserEmailStore<ApplicationUser>)UserStore;
+    }
+
+    private sealed class InputModel
+    {
+        public string? Id { get; set; }
+
+        [Required]
+        [Display(Name = "UserName")]
+        public string? UserName { get; set; }
+
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; } = "";
+
+        public string PhoneNumber { get; set; } = "";
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; } = "";
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        //[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; } = "";
+
+        public bool EmailConfirmed { get; set; }
+
+        public bool PhoneNumberConfirmed { get; set; }
+
+        public bool IsActive { get; set; }
+    }
+
+    private void AddNewUser()
+    {
+        ShowPopup = true;
+        Input = new InputModel();
+    }
+
+    private void EditUser(ApplicationUser user)
+    {
+        ShowPopup = true;
+        Input = new InputModel
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email!,
+                PhoneNumber = user.PhoneNumber!,
+                EmailConfirmed = user.EmailConfirmed,
+                PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+                IsActive = user.IsActive,
+                Password = "*****"
+
+            };
+    }
+}

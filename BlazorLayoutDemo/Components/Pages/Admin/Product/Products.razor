@@ -1,0 +1,68 @@
+﻿@page "/products"
+@inject IGenericService<Product, CatalogDbContext> ProductService
+<h3>Products</h3>
+
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <a href="product/create/" )">Create New Product</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th><label>Description</label></th>
+                <th><label>Name</label></th>
+                <th><label>Cost Price</label></th>
+                <th><label>Retail Price</label></th>
+                <th><label>Actions</label></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td><input type="checkbox" @bind="product.Selected" /></td>
+                    <td>@product.Description</td>
+                    <td>@product.Name</td>
+                    <td>@product.CostPrice</td>
+                    <td>@product.RetailPrice</td>
+                    <td>
+                        <a href="@($"product/details/{product.Id}")">Details</a> |
+                        <a href="@($"product/edit/{product.Id}")">Edit</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button class="btn btn-danger" @onclick="DeleteSelected">Delete Selected</button>
+
+
+   
+}
+@code {
+    private IEnumerable<Product>? products;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductService.GetAllAsync();
+    }
+
+    
+    private async Task DeleteSelected()
+    {
+        var selectedProducts = products?.Where(p => p.Selected).ToList();
+        foreach (var product in selectedProducts!)
+        {
+            await ProductService.DeleteAsync(product);
+        }
+
+        // Refresh the list
+        products = await ProductService.GetAllAsync();
+    }
+    
+}

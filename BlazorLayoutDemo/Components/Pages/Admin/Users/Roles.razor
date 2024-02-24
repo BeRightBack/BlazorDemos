@@ -1,0 +1,171 @@
+﻿@page "/roles"
+
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using BlazorLayoutDemo.Data
+@using BlazorLayoutDemo.Entity
+@using System.ComponentModel.DataAnnotations
+@using System.Text
+@using System.Text.Encodings.Web
+@using BlazorLayoutDemo.Components.Account
+@using BlazorLayoutDemo.Components.Account.Pages
+@using BlazorLayoutDemo.Components.Account.Shared
+@using BlazorLayoutDemo.Services
+@using Microsoft.AspNetCore.WebUtilities
+
+@inject RoleManager<ApplicationRole> RoleManager
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
+
+<h4>Create New Role</h4>
+
+<AuthorizeView>
+    <Authorized>
+        @if (errorMessage != null && !string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger" role="alert">
+                @errorMessage ?? string.Empty
+            </div>
+        }
+
+        <form @onsubmit="CreateRole">
+            <div class="form-group">
+                <label for="roleName">Role Name:</label>
+                <input type="text" class="form-control" id="roleName" @bind="Role!.Name" required>
+            </div>
+            <div class="form-group">
+                <label for="roleDescription">Role Description:</label>
+                <input type="text" class="form-control" id="roleDescription" @bind="Role.Description">
+            </div>
+            <br />
+            @if (IsEditMode)
+            {
+                <button class="btn btn-sm btn-primary" type="submit">Save</button>
+                <button class="btn btn-sm btn-primary" @onclick="()=>IsEditMode = false">Cancel</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-sm btn-primary">Create</button>
+            }
+        </form>
+        <br />
+        <h3 class="page-title">Roles</h3>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in RoleManager.Roles)
+                {
+                    <tr>
+                        <td>@role.Name</td>
+                        <td>@role.Description</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" @onclick="() => EditRole(role.Id)">Edit</button>
+                            <button class="btn btn-sm btn-danger" @onclick="() => DeleteRole(role.Id)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </Authorized>
+    <NotAuthorized>
+        <p>You're not loggged in.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+
+
+
+@code {
+    ApplicationRole? Role { get; set; } = new ApplicationRole();
+    // private string? newRoleName;
+    // private string? newRoleDescription;
+    // private string? editRoleId;
+    // private string? editRoleName;
+    // private string? editRoleDescription;
+    private bool IsEditMode { get; set; }
+    private string errorMessage = string.Empty;
+
+    private async Task CreateRole()
+    {
+        if (IsEditMode)
+        {
+            if (!string.IsNullOrEmpty(Role!.Id))
+            {
+                var role = await RoleManager.FindByIdAsync(Role.Id);
+                if (role != null)
+                {
+                    role.Name = Role.Name;
+                    role.Description = Role.Description;
+                    var result = await RoleManager.UpdateAsync(role);
+                    if (result.Succeeded)
+                    {
+                        Role.Id = "";
+                        Role.Name = null;
+                        Role.Description = null;
+                    }
+                    else
+                    {
+                        errorMessage = "Role update failed. Error: " + string.Join(", ", result.Errors.Select(e => e.Description));
+                    }
+                }
+                IsEditMode = false;
+            }
+            IsEditMode = false;
+        }
+        else
+        {
+            if (!string.IsNullOrEmpty(Role!.Name))
+            {
+                var role = new ApplicationRole
+                    {
+                        Name = Role.Name,
+                        Description = Role.Description
+                    };
+                var result = await RoleManager.CreateAsync(role);
+                if (result.Succeeded)
+                {
+                    Role.Name = string.Empty;
+                }
+                else
+                {
+                    errorMessage = "Role creation failed. Error: " + string.Join(", ", result.Errors.Select(e => e.Description));
+                }
+            }
+        }
+        NavigationManager.NavigateTo("/roles");
+        
+    }
+
+    private async Task EditRole(string roleId)
+    {
+        IsEditMode = true;
+        var role = await RoleManager.FindByIdAsync(roleId);
+        if (role != null)
+        {
+            Role!.Id = roleId;
+            Role.Name = role.Name;
+            Role.Description = role.Description;
+        }
+    }
+
+    private async void DeleteRole(string roleId)
+    {
+        var role = await RoleManager.FindByIdAsync(roleId);
+        if (role != null)
+        {
+            var result = await RoleManager.DeleteAsync(role);
+            if (!result.Succeeded)
+            {
+                errorMessage = "Role deletion failed. Error: " + string.Join(", ", result.Errors.Select(e => e.Description));
+            }
+        }
+    }
+}

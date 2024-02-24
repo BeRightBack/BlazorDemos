@@ -1,0 +1,27 @@
+﻿@page "/product/details/{Id}"
+@inject IGenericService<Product,CatalogDbContext> ProductService
+
+<div>
+    <h4>Product Details</h4>
+    <ul>
+        <li><strong>Id:</strong> @Product!.Id</li>
+        <li><strong>Name:</strong> @Product.Name</li>
+        <li><strong>Description:</strong> @Product.Description</li>
+        <li><strong>Price:</strong> @Product.CostPrice</li>
+        <li><strong>Price:</strong> @Product.RetailPrice</li>
+        <li><strong>Category:</strong> @Product.Categories</li>
+    </ul>
+</div>
+
+@code {
+
+    [Parameter]
+    public string? Id { get; set; }
+
+    public Product? Product { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Product = await ProductService.GetAsync(Guid.Parse(Id!));
+    }
+}

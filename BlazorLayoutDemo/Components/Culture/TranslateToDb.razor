@@ -1,0 +1,47 @@
+﻿@using DeepL
+@inject Translator Translator
+
+<h1>Translate Text with DeepL API</h1>
+
+<p>Enter some text to translate from @SourceLang to @TargetLang:</p>
+
+<textarea @bind="InputText" rows="5" cols="50"></textarea>
+
+<button @onclick="TranslateText">Translate</button>
+
+@if (!string.IsNullOrEmpty(OutputText))
+{
+    <p>Translated text:</p>
+    <p>@OutputText</p>
+}
+
+@code {
+    // Get the source and target languages from the configuration
+    [Inject]
+    public IConfiguration? Configuration { get; set; }
+
+    public string SourceLang => Configuration?["DeepLConfig:SourceLang"] ?? string.Empty;
+    public string TargetLang => Configuration?["DeepLConfig:TargetLangFr"] ?? string.Empty;
+
+    // The input and output text
+    public string? InputText { get; set; }
+    public string? OutputText { get; set; }
+
+    // The method to call the DeepL API and translate the input text
+    private async Task TranslateText()
+    {
+        // Clear the output text
+        OutputText = string.Empty;
+
+        // Check if the input text is not empty
+        if (!string.IsNullOrEmpty(InputText))
+        {
+            // Call the TranslateTextAsync method and pass the input text, source language, and target language
+            var result = await Translator.TranslateTextAsync(InputText, SourceLang, TargetLang);
+
+            // Set the output text to the translated text
+            OutputText = result.Text;
+        }
+    }
+    
+}

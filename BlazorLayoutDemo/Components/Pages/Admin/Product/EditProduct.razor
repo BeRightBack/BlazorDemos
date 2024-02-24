@@ -1,0 +1,56 @@
+﻿@page "/product/edit/{Id}"
+@using BlazorLayoutDemo.Components.Pages.Tools
+@inject IGenericService<Product,CatalogDbContext> ProductService
+<h3>EditProduct</h3>
+
+<EditForm Model="Product" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+   
+    <div class="form-group">
+        <label class="form-label" for="name">Name</label>
+        <InputText class="form-control" id="name" @bind-Value="Product.Name" />
+    </div>
+    
+        <RichTextEditor @bind-Value="Product.Description" />
+
+
+    <div class="form-group">
+        <label class="form-label" for="costPrice">Cost Price</label>
+        <InputNumber class="form-control" id="costPrice" @bind-Value="Product.CostPrice" />
+    </div>
+
+    <div class="form-group">
+        <label class="form-label" for="retailPrice">Retail Price</label>
+        <InputNumber class="form-control" id="retailPrice" @bind-Value="Product.RetailPrice" />
+    </div>
+    
+    
+    <button type="submit">Save</button>
+</EditForm>
+
+
+<span>Cost Price: @Product.CostPrice</span>
+<span>Retail Price: @Product.RetailPrice</span>
+
+@code {
+    int WordCount = 0;
+
+    
+    [Parameter]
+    public string? Id { get; set; }
+
+    private Product Product { get; set; } = new Product();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Product = await ProductService.GetAsync(Guid.Parse(Id!));
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        await ProductService.UpdateAsync(Product);
+        NavigationManager.NavigateTo("/products");
+    }
+    
+}

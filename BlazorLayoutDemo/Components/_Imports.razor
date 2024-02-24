@@ -1,0 +1,24 @@
+﻿@using System.Net.Http
+@using System.Net.Http.Json
+@using System.Globalization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Localization
+@using Microsoft.JSInterop
+@using BlazorLayoutDemo
+@using BlazorLayoutDemo.Data
+@using BlazorLayoutDemo.Services
+@using BlazorLayoutDemo.Repository
+@using BlazorLayoutDemo.Entity
+@using BlazorLayoutDemo.Components
+@using global::Resources
+@using DeepL
+@inject Translator Translator
+@inject IStringLocalizer<SharedResource> Localizer
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager

@@ -1,0 +1,75 @@
+﻿@page "/product/create"
+@inject IGenericService<Product, CatalogDbContext> ProductService
+<h1>Create Product</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <EditForm Model="product" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+            <input type="hidden" asp-for="ActiveTab" />
+            <input type="hidden" id="continueEditing" name="continueEditing" value="false" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="info" aria-selected="true">Info</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" type="button" role="tab" aria-controls="data" aria-selected="false">Data</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="seo-tab" data-bs-toggle="tab" data-bs-target="#seo" type="button" role="tab" aria-controls="seo" aria-selected="false">SEO</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="image-tab" data-bs-toggle="tab" data-bs-target="#image" type="button" role="tab" aria-controls="image" aria-selected="false">Images</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="specification-tab" data-bs-toggle="tab" data-bs-target="#specification" type="button" role="tab" aria-controls="specification" aria-selected="false">Specification</button>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="info" role="tabpanel" aria-labelledby="info-tab"></div>
+                    <div class="tab-pane" id="data" role="tabpanel" aria-labelledby="data-tab"></div>
+                    <div class="tab-pane" id="seo" role="tabpanel" aria-labelledby="seo-tab"></div>
+                    <div class="tab-pane" id="image" role="tabpanel" aria-labelledby="image-tab"></div>
+                    <div class="tab-pane" id="specification" role="tabpanel" aria-labelledby="specification-tab"></div>
+                </div>
+            </div> <!-- nav tabs custom end -->
+            <div class="form-group">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create</button>
+
+            <a href="products" class="btn btn-default">Cancel</a>
+        </EditForm>
+    </div> <!-- col md 12 end -->
+</div> <!-- row end -->
+
+<div>
+    <a href="products">Back to List</a>
+</div>
+@* <EditForm Model="product" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <!-- Product fields... -->
+    <InputText id="name" @bind-Value="product.Name" />
+
+    <!-- Child components for related entities... -->
+    <CreateProductCategoryMapping Categories="product.Categories" />
+    <CreateProductImageMapping Images="product.Images" />
+    <CreateProductManufacturerMapping Manufacturers="product.Manufacturers" />
+    <CreateProductSpecificationMapping Specifications="product.Specifications" />
+
+    <button type="submit">Create</button>
+</EditForm> *@
+
+@code {
+    private Product product = new Product();
+
+    private async Task HandleValidSubmit()
+    {
+        await ProductService.UpdateAsync(product);
+    }
+}

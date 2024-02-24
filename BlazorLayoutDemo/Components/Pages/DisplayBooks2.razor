@@ -1,0 +1,51 @@
+﻿@page "/display-books2"
+
+@using BlazorLayoutDemo.Components.Pages.Tools.TTable
+@using BlazorLayoutDemo.Data
+@using BlazorLayoutDemo.Services
+
+@inject BookService BookService
+@inject IGenericService<Book,CatalogDbContext> GenericService
+
+<h2 class="bg-success text-white">Books-Pagination Test 2</h2>
+
+
+<TTable entities="allBooks?.ToList()" models="ModelList" />
+
+
+@code {     
+
+    private IEnumerable<Book>? allBooks = null;
+    private IEnumerable<Book> books = Enumerable.Empty<Book>();    
+
+    public List<Book> BookList { get; set; } = new List<Book>();    
+    public List<string> ModelList { get; set; } = new List<string> { "Title", "Author" };
+
+    protected async override Task OnInitializedAsync()
+    {
+        await GetBooks();
+    }
+
+    // private void SelectedPage(int selectedPageIndex)
+    // {
+    // if (allBooks != null)
+    // {
+    //     State!.PageIndex = selectedPageIndex;
+    //     var skipCount = itemsPerPage * (State.PageIndex - 1);
+    //     books = allBooks.Skip(skipCount).Take(itemsPerPage);
+    // }
+    // }
+
+    private async Task GetBooks()
+    {        
+         allBooks = await GenericService.GetAllAsync();
+
+         if (!allBooks.Any())
+         {
+            BookService.AddRandomBooks(500);
+            allBooks = await GenericService.GetAllAsync();
+         }
+    }
+
+    
+}

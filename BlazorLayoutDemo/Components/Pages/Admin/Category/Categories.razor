@@ -1,0 +1,67 @@
+﻿@page "/categories"
+@inject IGenericService<Category,CatalogDbContext> CategoryService
+
+<h3>Categories</h3>
+
+@if (categories == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <a href="category/create/" )">Create New Category</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>                
+                <th>Name</th>
+                <th>Description</th>
+                <th>Published</th>
+                <th>Actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in categories)
+            {
+                <tr>
+                    <td><input type="checkbox" @bind="category.Selected" /></td>
+                    <td>@category.Name</td>
+                    <td>@category.Description</td>
+                    <td>@category.Published</td>
+                    <td>
+                        <a href="@($"category/details/{category.Id}")">Details</a> |
+                        <a href="@($"category/edit/{category.Id}")">Edit</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button class="btn btn-danger" @onclick="DeleteSelected">Delete Selected</button>
+
+    
+}
+@code {
+    
+     private IEnumerable<Category>? categories;
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await CategoryService.GetAllAsync();
+    }
+
+
+    private async Task DeleteSelected()
+    {
+        var selectedCategories = categories?.Where(p => p.Selected).ToList();
+        foreach (var category in selectedCategories!)
+        {
+            await CategoryService.DeleteAsync(category);
+        }
+
+        // Refresh the list
+        categories = await CategoryService.GetAllAsync();
+    }
+
+}

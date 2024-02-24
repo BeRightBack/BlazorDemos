@@ -1,0 +1,367 @@
+﻿@page "/admin/stringresources"
+
+@inject IGenericService<StringResource, LocalizationDbContext> _service;
+@inject IGenericService<Language, LocalizationDbContext> _language;
+
+<button class="btn btn-sm btn-primary" @onclick="Add">Add New Item</button>
+
+<div class="form-group">
+    <label for="searchInput">Search:</label>
+    <input id="searchInput" class="form-control" @bind="searchTerm" />
+</div>
+
+@if (stringResources == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr class="col-auto">
+                <th></th>
+                <th>
+                    <button class="btn btn-sm btn-link" @onclick="SortByName">Name</button>
+                </th>
+                <th>
+                    <button class="btn btn-sm btn-link" @onclick="SortByValue">Value</button>
+                </th>
+                <th><button class="btn btn-sm btn-link" @onclick="SortByLanguage">Language</button></th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stringResource in filteredStringResources.Skip((currentPage - 1) * pageSize).Take(pageSize))
+            {
+                <tr>
+                    <td><input type="checkbox" @bind="stringResource.Selected" /></td>
+                    <td>@stringResource.Name</td>
+                    <td>@stringResource.Value</td>
+                    <td>@(languages?.FirstOrDefault(p => p.Id == stringResource.LanguageId)?.Name)</td>
+                    <td><button class="btn btn-sm btn-primary" @onclick='()=>Edit(stringResource.Id)'>Edit</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button class="btn btn-sm btn-danger" @onclick="DeleteSelected">Delete Selected</button>
+
+}
+
+@if (stringResources?.Count() > pageSize)
+{
+    <div class="pagination">
+        <button class="btn btn-sm btn-primary me-sm-1" disabled="@IsFirstPage" @onclick="GoToFirstPage">First</button>
+        <button class="btn btn-sm btn-primary me-sm-1" disabled="@IsFirstPage" @onclick="GoToPreviousPage">Previous</button>
+        <span> Page @currentPage of @TotalPages </span>
+        <button class="btn btn-sm btn-primary ms-sm-1 me-sm-1" disabled="@IsLastPage" @onclick="GoToNextPage">Next</button>
+        <button class="btn btn-sm btn-primary me-sm-1" disabled="@IsLastPage" @onclick="GoToLastPage">Last</button>
+    </div>
+}
+
+@if (ShowPopup)
+{
+    <!-- This is the popup to edit a resource -->
+    <div class="modal" tabindex="-1" style="display:block" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Translation to @GetLanguageName()</h3>
+                    <!-- Button to close the popup -->
+                    <button type="button" class="close"
+                            @onclick="ClosePopup">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </div>
+                <!-- Edit form -->
+                <div class="modal-body">
+                    <EditForm Model="@stringResource" OnValidSubmit="Save">
+                        <DataAnnotationsValidator />
+                        <div class="form-group">
+                            <label for="Name">Name</label>
+                            <InputText id="Name" class="form-control" @bind-Value="stringResource!.Name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Value">Value</label>
+                            <InputText id="Value" class="form-control" @bind-Value="stringResource.Value" />
+                        </div>
+                        @if (stringResource.Value != "Default Value")
+                        {
+                            <button class="btn btn-sm btn-primary" @onclick='() => TranslateText(stringResource.Id)'>Translate</button>
+                        }
+                        <button class="btn btn-sm btn-primary" type="submit">Save</button>
+
+                        <button class="btn btn-sm btn-primary" @onclick="()=> Cancel()">Cancel</button>
+
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ShowPopup2)
+{
+    <!-- This is the popup to create a Resource -->
+    <div class="modal" tabindex="-1" style="display:block" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Create a resource in english</h3>
+                    <!-- Button to close the popup -->
+                    <button type="button" class="close"
+                            @onclick="ClosePopup">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </div>
+                @if (ResourceExists)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        The resource already exists.
+                    </div>
+                }
+                <!-- Create form -->
+                <div class="modal-body">
+                    <EditForm Model="@stringResource" OnValidSubmit="Create">
+                        <DataAnnotationsValidator />
+                        <div class="form-group">
+                            <label for="Name">Name</label>
+                            <InputText id="Name" class="form-control" @bind-Value="stringResource!.Name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Value">Value</label>
+                            <InputText id="Value" class="form-control" @bind-Value="stringResource.Value" />
+                        </div>
+
+                        <button class="btn btn-sm btn-primary" type="submit">Create</button>
+
+                        <button class="btn btn-sm btn-primary" @onclick="ClosePopup">Cancel</button>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@code {
+
+    [Inject]
+    public IConfiguration? Configuration { get; set; }
+    [Parameter]
+    public Guid Id { get; set; }
+    private Guid selectedLanguageId;
+    private Language? language { get; set; }
+    private IEnumerable<Language>? languages;
+    private StringResource? stringResource { get; set; }
+    private IEnumerable<StringResource>? stringResources;
+    private StringResource? selectedItem;
+    private string searchTerm = "";
+
+    public string SourceLang => Configuration?["DeepLConfig:SourceLang"]!;
+
+    private string LanguageIdString
+    {
+        get => stringResource?.LanguageId.ToString() ?? "";
+        set
+        {
+            if (Guid.TryParse(value, out var guid))
+            {
+                if (stringResource != null)
+                {
+                    stringResource.LanguageId = guid;
+                }
+            }
+        }
+    }
+    bool ShowPopup = false;
+    bool ShowPopup2 = false;
+    private bool ResourceExists { get; set; } = false;
+
+
+    private IEnumerable<StringResource> filteredStringResources
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                return stringResources ?? Enumerable.Empty<StringResource>();
+            }
+            else
+            {
+                return stringResources?.Where(sr => sr.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ?? Enumerable.Empty<StringResource>();
+            }
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        language = new Language
+            {
+                Name = "Default Name",
+                Culture = "Default Culture"
+            };
+        languages = await _language.GetAllAsync();
+        stringResource = new StringResource
+            {
+                Name = string.Empty,
+                Value = string.Empty
+            };
+        stringResources = await _service.GetAllAsync();
+    }
+
+    private string GetLanguageName()
+    {
+        if (stringResource != null && languages != null)
+        {
+            var language = languages.FirstOrDefault(l => l.Id == stringResource.LanguageId);
+            if (language != null)
+            {
+                return language.Name;
+            }
+        }
+        return string.Empty;
+    }
+
+    async Task Save()
+    {
+        await _service.UpdateAsync(stringResource!);
+        selectedItem = null;
+        ShowPopup = false;
+    }
+    async Task Edit(Guid id)
+    {
+        stringResource = await _service.GetAsync(id);
+        selectedItem = stringResource;
+        selectedLanguageId = stringResource.LanguageId;
+        ShowPopup = true;
+    }
+    async Task Add()
+    {
+        await Task.Delay(1000);
+
+        ShowPopup2 = true;
+    }
+    async Task Create()
+    {
+        //check if the stringResource!.Name exists
+        //var result = await _service.GetAllAsync();
+        var stringResourceExists = stringResources?.FirstOrDefault(sr => sr.Name == stringResource!.Name);
+        if (stringResourceExists == null)
+        {
+            foreach (var language in languages!)
+            {
+                var _resource = new StringResource
+                    {
+                        LanguageId = language.Id,
+                        Name = stringResource!.Name,
+                        Value = stringResource.Value
+                    };
+                await _service.AddAsync(_resource!);
+            }
+            ResourceExists = false;
+        }//else show a message that the resource already exists
+        else
+        {
+            ResourceExists = true;
+            await Task.Delay(2000);
+            ResourceExists = false;
+            ShowPopup2 = false;
+        }
+
+        ShowPopup2 = false;
+
+        //refresh page
+        await OnInitializedAsync();
+    }
+
+    void ClosePopup()
+    {
+        // Close the Popups
+        ShowPopup = false;
+        ShowPopup2 = false;
+    }
+    private async Task DeleteSelected()
+    {
+        var selectedRessources = stringResources?.Where(p => p.Selected).ToList();
+        foreach (var resource in selectedRessources!)
+        {
+            await _service.DeleteAsync(resource);
+        }
+
+        // Refresh the list
+        stringResources = await _service.GetAllAsync();
+    }
+    private void Cancel()
+    {
+
+        selectedItem = null;
+    }
+
+    private async Task TranslateText(Guid id)
+    {
+        ShowPopup = true;
+        var TargetLang = string.Empty;
+
+        var languageResult = await _language.GetAsync(stringResource!.LanguageId);
+        TargetLang = languageResult.Culture.ToUpper();
+        if (TargetLang == "PT")
+        {
+            TargetLang = "PT-PT";
+        }
+        if (TargetLang == "EN")
+        {
+            TargetLang = "EN-US";
+        }
+
+
+        if (!string.IsNullOrEmpty(stringResource!.Name))
+        {
+            // Call the TranslateTextAsync method and pass the input text, source language, and target language
+            var result = await Translator.TranslateTextAsync(stringResource!.Name, SourceLang, TargetLang);
+
+            // Set the output text to the translated text
+            stringResource.Value = result.Text;
+            stringResource = await _service.GetAsync(id);
+
+            selectedItem = stringResource;
+        }
+    }
+
+    private int currentPage = 1;
+    private int pageSize = 10;
+    private bool IsFirstPage => currentPage == 1;
+    private bool IsLastPage => currentPage == TotalPages;
+    private int TotalPages => filteredStringResources != null ? (int)Math.Ceiling((double)filteredStringResources.Count() / pageSize) : 0;
+
+    private void GoToFirstPage()
+    {
+        currentPage = 1;
+    }
+
+    private void GoToPreviousPage()
+    {
+        currentPage--;
+    }
+
+    private void GoToNextPage()
+    {
+        currentPage++;
+    }
+
+    private void GoToLastPage()
+    {
+        currentPage = TotalPages;
+    }
+
+    private void SortByName()
+    {
+        stringResources = stringResources?.OrderBy(sr => sr.Name);
+    }
+
+    private void SortByValue()
+    {
+        stringResources = stringResources?.OrderBy(sr => sr.Value);
+    }
+    private void SortByLanguage()
+    {
+        stringResources = stringResources?.OrderBy(sr => sr.LanguageId);
+    }
+}

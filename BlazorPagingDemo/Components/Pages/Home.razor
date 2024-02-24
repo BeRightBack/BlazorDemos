@@ -1,0 +1,117 @@
+﻿@page "/"
+@inject NavigationManager NavigationManager
+
+@using Microsoft.AspNetCore.WebUtilities
+
+<PageTitle>Home</PageTitle>
+
+
+<h1>Products</h1>
+
+<p>This component demonstrates searching and paging.</p>
+
+<div>
+    <Search Items="filteredProducts" OnSearch="UpdateFiltered" />
+
+</div>
+
+
+@if (filteredProducts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var product in filteredProducts)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                    <td>@product.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+}
+
+Welcome to your new app.
+
+@code
+{
+    private List<Product> filteredProducts = new List<Product>();
+
+    // create random products
+    private List<Product> products = new List<Product>
+    {
+        new Product { Name = "Product 1", Description = "Description for Product 1", Price = 100, Published = true },
+        new Product { Name = "Product 2", Description = "Description for Product 2", Price = 200, Published = true },
+        new Product { Name = "Product 3", Description = "Description for Product 3", Price = 300, Published = true },
+        new Product { Name = "Product 4", Description = "Description for Product 4", Price = 400, Published = true },
+        new Product { Name = "Product 5", Description = "Description for Product 5", Price = 500, Published = true },
+        new Product { Name = "Product 6", Description = "Description for Product 6", Price = 600, Published = true },
+        new Product { Name = "Product 7", Description = "Description for Product 7", Price = 700, Published = true },
+        new Product { Name = "Product 8", Description = "Description for Product 8", Price = 800, Published = true },
+        new Product { Name = "Product 9", Description = "Description for Product 9", Price = 900, Published = true },
+        new Product { Name = "Product 10", Description = "Description for Product 10", Price = 1000, Published = true },
+        new Product { Name = "Product 11", Description = "Description for Product 11", Price = 1100, Published = true },
+        new Product { Name = "Product 12", Description = "Description for Product 12", Price = 1200, Published = true },
+        new Product { Name = "Product 13", Description = "Description for Product 13", Price = 1300, Published = true },
+        new Product { Name = "Product 14", Description = "Description for Product 14", Price = 1400, Published = true },
+        new Product { Name = "Product 15", Description = "Description for Product 15", Price = 1500, Published = true },
+        new Product { Name = "Product 16", Description = "Description for Product 16", Price = 1600, Published = true },
+        new Product { Name = "Product 17", Description = "Description for Product 17", Price = 1700, Published = true },
+        new Product { Name = "Product 18", Description = "Description for Product 18", Price = 1800, Published = true },
+        new Product { Name = "Product 19", Description = "Description for Product 19", Price = 1900, Published = true },
+        new Product { Name = "Product 20", Description = "Description for Product 20", Price = 2000, Published = true }
+        };
+
+
+
+    private class Product
+    {
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public decimal Price { get; set; }
+        public bool Published { get; set; }
+
+    }
+
+    protected override void OnInitialized()
+    {
+        filteredProducts = products.ToList();
+    }
+
+    private void UpdateFiltered(string search)
+    {
+        if (string.IsNullOrEmpty(search))
+        {
+            filteredProducts = products.ToList();
+            NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+
+        }
+        else
+        {
+            filteredProducts = products.Where
+            (
+                p => p.Name!.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+                p.Description!.Contains(search, StringComparison.OrdinalIgnoreCase)
+            )
+            .ToList();
+            //NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+        }
+    }
+   
+
+}

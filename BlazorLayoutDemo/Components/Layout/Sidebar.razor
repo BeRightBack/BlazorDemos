@@ -1,0 +1,339 @@
+﻿
+<div class="auto-hiding-nav-menu"
+     @onmouseover="ExpandNavMenu"
+     @onmouseleave="CollapseNavMenu">
+        
+    <nav class="nav-menu @(collapseNavMenu ? "collapsed" : "expand")">
+        <div class="scrollarea">
+
+            <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(0)" href="" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill nav-item-icon" aria-hidden="true">
+                    <span class="nav-item-text">Home</span>
+                </span>
+            </NavLink>
+            
+            @if (expandSubNav)
+            {
+                <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(1)">
+                    <span class="bi bi-shop nav-item-icon" aria-hidden="true">
+                        <span class="nav-item-text">Store <span class="bi bi-chevron-down"></span></span>
+                    </span>
+                </NavLink>                
+                <div class="up">
+                    <NavLink class="nav-link" href="products">
+                        <span class="nav-item-text2">Products</span>
+                    </NavLink>
+                </div>
+                
+                <div class="up">
+                    <NavLink class="nav-link" href="categories">
+                        <span class="nav-item-text2">Categories</span>
+                    </NavLink>
+                </div>
+                <div class="up">
+                    <NavLink class="nav-link" href="display-books">
+                        <span class="nav-item-text2">display-books</span>
+                    </NavLink>
+                </div>
+                <div class="up">
+                    <NavLink class="nav-link" href="display-books2">
+                        <span class="nav-item-text2">display-books 2</span>
+                    </NavLink>
+                </div>
+                
+            }
+            else
+            {
+                <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(1)">
+                    <span class="bi bi-shop nav-item-icon" aria-hidden="true">
+                        <span class="nav-item-text">Store <span class="bi bi-chevron-right"></span></span>
+                    </span>
+                </NavLink>
+            }            
+            @if (expandSubNav2)
+            {
+                <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(2)">
+                    <span class="bi bi-globe-americas nav-item-icon" aria-hidden="true">
+                        <span class="nav-item-text">Localization <span class="bi bi-chevron-down"></span></span>
+                    </span>
+                </NavLink>
+                
+                <div class="up">
+                    <NavLink class="nav-link" href="translate">
+                        <span class="nav-item-text2">Translate</span>
+                    </NavLink>
+                </div>
+                <div class="up">
+                    <NavLink class="nav-link" href="admin/languages">
+                        <span class="nav-item-text2">Language Admin</span>
+                    </NavLink>
+                </div>
+                <div class="up">
+                    <NavLink class="nav-link" href="admin/stringresources">
+                        <span class="nav-item-text2">Resource Admin</span>
+                    </NavLink>
+                </div>
+            }
+            else
+            {
+                <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(2)">
+                    <span class="bi bi-globe-americas nav-item-icon" aria-hidden="true">
+                        <span class="nav-item-text">Localization <span class="bi bi-chevron-right"></span></span>
+                    </span>
+                </NavLink>
+            }
+
+            @if (expandSubNav3)
+            {
+                <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(3)">
+                    <span class="bi bi-controller nav-item-icon" aria-hidden="true">
+                        <span class="nav-item-text">Fetch data <span class="bi bi-arrow-down-circle"></span></span>
+                    </span>
+                </NavLink>
+                <div class="up">
+                    <NavLink class="nav-link " href="Counter">
+                        <span class="nav-item-text2">Sub1</span>
+                    </NavLink>
+                </div>
+                <div class="up">
+                    <NavLink class="nav-link" href="products">
+                        <span class="nav-item-text2">Sub2</span>
+                    </NavLink>
+                </div>
+            }
+            else
+            {
+                <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(3)">
+                    <span class="bi bi-controller nav-item-icon" aria-hidden="true">
+                        <span class="nav-item-text">Fetch data <span class="bi bi-arrow-right-circle"></span></span>
+                    </span>
+                </NavLink>
+            }
+            <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(0)" href="counter">
+                <span class="bi bi-plus-square nav-item-icon" aria-hidden="true">
+                    <span class="nav-item-text">Counter</span>
+                </span>
+            </NavLink>
+            
+            <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(0)" href="products">
+                <span class="bi bi-list-nested nav-item-icon" aria-hidden="true">
+                    <span class="nav-item-text">products</span>
+                </span>
+            </NavLink>
+            <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(0)" href="auth">
+                <span class="bi bi-lock nav-item-icon" aria-hidden="true">
+                    <span class="nav-item-text">Auth Required</span>
+                </span>
+            </NavLink>
+            <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(0)" href="">
+                <span class="bi bi-house nav-item-icon" aria-hidden="true">
+                    <span class="nav-item-text">Home</span>
+                </span>
+            </NavLink>
+
+            @if (expandSubNav4)
+            {
+                <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(4)">
+                    <span class="bi bi-controller nav-item-icon" aria-hidden="true">
+                        <span class="nav-item-text">Test Pages<span class="bi bi-arrow-down-circle"></span></span>
+                    </span>
+                </NavLink>
+                <div class="up">
+                    <NavLink class="nav-link " href="Counter">
+                        <span class="nav-item-text2">Counter</span>
+                    </NavLink>
+                </div>
+                <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(0)" href="weather">
+                    <span class="bi bi-list-nested nav-item-icon" aria-hidden="true">
+                        <span class="nav-item-text">Weather</span>
+                    </span>
+                </NavLink>
+                <div class="up">
+                    <NavLink class="nav-link" href="texteditor">
+                        <span class="nav-item-text2">Text Editor</span>
+                    </NavLink>
+                </div>
+                
+                <div class="up">
+                    <NavLink class="nav-link" href="render-modes">
+                        <span class="nav-item-text2">RenderModes</span>
+                    </NavLink>
+                </div>
+            }
+            else
+            {
+                <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(4)">
+                    <span class="bi bi-controller nav-item-icon" aria-hidden="true">
+                        <span class="nav-item-text">Fetch data <span class="bi bi-arrow-right-circle"></span></span>
+                    </span>
+                </NavLink>
+            }
+            <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(0)" href="/">
+                <span class="bi bi-controller nav-item-icon">
+                    <span class="nav-item-text">TicTacToe</span>
+                </span>
+            </NavLink>
+            <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(0)" href="/">
+                <span class="bi bi-journal-text nav-item-icon">
+                    <span class="nav-item-text">Articles</span>
+                </span>
+            </NavLink>
+            <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(0)" href="/">
+                <span class="bi bi-award nav-item-icon">
+                    <span class="nav-item-text">Awards</span>
+                </span>
+            </NavLink>
+            <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(0)" href="/">
+                <span class="bi bi-camera-reels nav-item-icon">
+                    <span class="nav-item-text">Youtube</span>
+                </span>
+            </NavLink>
+            <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(0)" href="/">
+                <span class="bi bi-book nav-item-icon">
+                    <span class="nav-item-text">Books</span>
+                </span>
+            </NavLink>
+            <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(0)" href="/">
+                <span class="bi bi-columns-gap nav-item-icon">
+                    <span class="nav-item-text">Projects</span>
+                </span>
+            </NavLink>
+            <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(0)" href="/">
+                <span class="bi bi-discord nav-item-icon">
+                    <span class="nav-item-text">Discord</span>
+                </span>
+            </NavLink>
+            <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(0)" href="/">
+                <span class="bi bi-info-circle nav-item-icon">
+                    <span class="nav-item-text">About</span>
+                </span>
+            </NavLink>
+            <NavLink class="nav-link" @onclick="()=>ExpandSubMenu(0)" href="/">
+                <span class="bi bi-person-lines-fill nav-item-icon">
+                    <span class="nav-item-text">Contact</span>
+                </span>
+            </NavLink>
+        </div>
+    </nav>
+</div>
+<style>
+    .nav-link {
+        padding-top: 10px;
+        /* margin-bottom: 10px; */
+    }
+
+    .expand .nav-link {
+        padding-top: 10px;
+        /* margin-bottom: 18px; */
+    }
+</style>
+
+@code {
+    private bool collapseNavMenu = true;
+    private const int Number = 0;
+    private bool isHovered = false;
+    private bool expandSubNav;
+    private bool expandSubNav2;
+    private bool expandSubNav3;
+    private bool expandSubNav4;
+
+    private void ExpandNavMenu()
+    {
+        isHovered = true;
+        if (collapseNavMenu) collapseNavMenu = false;
+    }
+
+    private void CollapseNavMenu()
+    {
+        isHovered = false;
+        if (!collapseNavMenu) collapseNavMenu = true;
+
+        ExpandSubMenu(0);
+    }
+    
+    private void ExpandSubMenu(int number)
+    {
+        switch (number)
+        {
+            case 1:
+                expandSubNav = !expandSubNav;
+                if (expandSubNav2 && expandSubNav)
+                {
+                    expandSubNav2 = !expandSubNav2;                    
+                }
+                if (expandSubNav3 && expandSubNav)
+                {
+                    expandSubNav3 = !expandSubNav3;
+                }
+                if (expandSubNav4 && expandSubNav)
+                {
+                    expandSubNav4 = !expandSubNav4;
+                }
+                break;
+            case 2:
+                expandSubNav2 = !expandSubNav2;
+                if (expandSubNav && expandSubNav2)
+                {
+                    expandSubNav = !expandSubNav;
+                }
+                if (expandSubNav3 && expandSubNav2)
+                {
+                    expandSubNav3 = !expandSubNav3;
+                }
+                if (expandSubNav4 && expandSubNav2)
+                {
+                    expandSubNav4 = !expandSubNav4;
+                }
+                break;
+            case 3:
+                expandSubNav3 = !expandSubNav3;
+                if (expandSubNav && expandSubNav3)
+                {
+                    expandSubNav = !expandSubNav;
+                }
+                if (expandSubNav2 && expandSubNav3)
+                {
+                    expandSubNav2 = !expandSubNav2;
+                }
+                if (expandSubNav4 && expandSubNav3)
+                {
+                    expandSubNav4 = !expandSubNav4;
+                }
+                break;
+            case 4:
+                expandSubNav4 = !expandSubNav4;
+                if (expandSubNav2 && expandSubNav4)
+                {
+                    expandSubNav2 = !expandSubNav2;
+                }
+                if (expandSubNav3 && expandSubNav4)
+                {
+                    expandSubNav3 = !expandSubNav3;
+                }
+                if (expandSubNav && expandSubNav4)
+                {
+                    expandSubNav = !expandSubNav;
+                }
+                break;
+            default:
+                
+                if (expandSubNav)
+                {
+                    expandSubNav = !expandSubNav;
+                }
+                if (expandSubNav2)
+                {
+                    expandSubNav2 = !expandSubNav2;
+                }
+                if (expandSubNav3)
+                {
+                    expandSubNav3 = !expandSubNav3;
+                }
+                if (expandSubNav4)
+                {
+                    expandSubNav4 = !expandSubNav4;
+                }                
+                break;
+        }
+    }
+}

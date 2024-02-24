@@ -1,0 +1,96 @@
+﻿@page "/category/create"
+@using BlazorLayoutDemo.Components.Pages.Tools
+@inject IGenericService<Category, CatalogDbContext> CategoryService
+
+<h1>Create Category</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <EditForm Model="Category" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label class="form-label" for="name">Name</label>
+                <InputText class="form-control" id="name" @bind-Value="Category.Name" />
+            </div>           
+            <RichTextEditor @bind-Value="Category.Description" />
+            @* <div class="form-group">
+                <label class="form-label" for="editor">Description</label><br />
+                <button type="button" @onclick="Bold">Bold</button>
+                <button type="button" @onclick="Italic">Italic</button>
+                <InputTextArea @bind-Value="Category.Description" id="editor" @oninput="UpdateInput" style="width:100%; height:300px;"></InputTextArea>
+            </div>
+            <p>InputValue: @InputValue</p>      
+            <p>Word Count: @WordCount</p>  *@
+
+            <div class="form-group">
+                <label class="form-label" for="displayorder">Display Order</label>
+                <InputNumber class="form-control" id="displayorder" @bind-Value="Category.DisplayOrder" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="seourl">Seo Url</label>
+                <InputText class="form-control" id="seourl" @bind-Value="Category.SeoUrl" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="metatitle">Meta Title</label>
+                <InputText class="form-control" id="metatitle" @bind-Value="Category.MetaTitle" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="metakeywords">Meta Keywords</label>
+                <InputText class="form-control" id="metakeywords" @bind-Value="Category.MetaKeywords" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="metadescription">Meta Description</label>
+                <InputText class="form-control" id="metadescription" @bind-Value="Category.MetaDescription" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="published">Published</label>
+                <InputCheckbox id="published" @bind-Value="Category.Published" />
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="parentcategoryid">Parent Category</label>
+                <InputSelect class="form-control" id="parentcategoryid" @bind-Value="Category.ParentCategoryId" />
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div> <!-- col md 12 end -->
+</div> <!-- row end -->
+
+<div>
+    <a href="categories">Back to List</a>
+</div>
+
+@code {
+    
+    public Category Category = new Category();
+    
+    // public int WordCount = 0;
+    // [Parameter]
+    // public string InputValue { get; set; }
+    
+
+    public async Task HandleValidSubmit()
+    {
+        await CategoryService.UpdateAsync(Category);
+        NavigationManager.NavigateTo("/categories");
+    }
+
+    // private void Bold()
+    // {
+    //     category.Description += "<strong></strong>";
+    // }
+
+    // private void Italic()
+    // {
+    //     category.Description += "<em></em>";
+    // }
+    
+    // private async Task UpdateInput(ChangeEventArgs e)
+    // {
+    //     category.Description = e.Value.ToString();
+    //     InputValue = category.Description;
+    //     WordCount = await Task.Run(() => string.IsNullOrEmpty(category.Description) ? 0 : System.Text.RegularExpressions.Regex.Matches(category.Description, @"\w+").Count);
+    // }
+    
+}

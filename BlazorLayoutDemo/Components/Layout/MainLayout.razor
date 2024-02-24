@@ -1,0 +1,86 @@
+﻿@inherits LayoutComponentBase
+@implements IDisposable
+
+<TopMenu/>
+@if (isUserInRole)
+{
+    <div class="page">
+        <Sidebar />
+
+        <main>
+            @* <div class="top-row px-4">
+                <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+            </div> *@
+
+            <article class="content px-4">
+                @Body
+            </article>
+        </main>
+    </div>
+
+}
+else
+{
+    <StoreHeader />
+    <div class="page">
+        <div class="row">
+            <main>
+
+
+                <article class="flex-column mb-3 content px-4">
+                    @Body
+                </article>
+            </main>
+        </div>
+
+    </div>
+    
+}
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+@code {
+    private bool isUserInRole;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity!.IsAuthenticated)
+        {
+            isUserInRole = user.IsInRole("Administrator");
+        }
+    }
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+    // private void ChangeCulture(ChangeEventArgs e)
+    // {
+    //     var culture = (string)e.Value;
+    //     var uri = new Uri(NavigationManager.Uri)
+    //         .GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
+    //     var query = $"?culture={Uri.EscapeDataString(culture)}&redirectUri={Uri.EscapeDataString(uri)}";
+
+    //     NavigationManager.NavigateTo("/Culture/SetCulture" + query, forceLoad: true);
+    // }
+
+}

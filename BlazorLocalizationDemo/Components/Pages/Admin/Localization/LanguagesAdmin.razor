@@ -1,0 +1,115 @@
+﻿@page "/admin/languages"
+
+@inject IGenericService<Language, LocalizationDbContext> service;
+
+<h3 class="page-title">Languages</h3>
+
+<div class="container">
+    <div class="row">
+        <EditForm Model="@language" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label for="Name">Name</label>
+                <InputText id="Name" class="form-control" @bind-Value="language!.Name" />
+            </div>
+            <div class="form-group">
+                <label for="Culture">Culture</label>
+                <InputText id="Culture" class="form-control" @bind-Value="language.Culture" />
+            </div>
+            @if (IsEditMode)
+            {
+                <button class="btn btn-sm btn-primary" type="submit">Save</button>
+                <button class="btn btn-sm btn-primary" @onclick="()=>IsEditMode = false">Cancel</button>
+            }
+            else
+            {
+                <button class="btn btn-sm btn-primary" type="submit">Add New Item</button>
+            }
+        </EditForm>
+    </div>
+</div>
+
+@if (languages == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr class="col-auto">
+                <th></th>
+                <th>Name</th>
+                <th>Culture</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var language in languages)
+            {
+                <tr>
+                    <td><input type="checkbox" @bind="language.Selected" /></td>
+                    <td>@language.Name</td>
+                    <td>@language.Culture</td>
+                    <td><button class="btn btn-sm btn-primary" @onclick='()=>EditItem(language.Id)'>Edit</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button class="btn btn-sm btn-danger" @onclick="DeleteSelected">Delete Selected</button>
+}
+
+@code {
+
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private Language? language { get; set; }
+    private IEnumerable<Language>? languages;
+    private bool IsEditMode;
+
+    protected override async Task OnInitializedAsync()
+    {
+        IsEditMode = false;
+        language = new Language
+            {
+                Name = "",
+                Culture = ""
+            };
+        languages = await service.GetAllAsync();
+    }
+
+    private void HandleValidSubmit()
+    {
+        if (IsEditMode)
+        {
+            service.Update(language!);
+            IsEditMode = false;
+        }
+        else
+        {
+            service.AddAsync(language!);
+        }
+        NavigationManager.NavigateTo("/admin/languages");
+
+    }
+
+    private void EditItem(Guid id)
+    {
+        language = service.Get(id);
+        IsEditMode = true;
+    }
+
+    private async Task DeleteSelected()
+    {
+        var selectedLanguages = languages?.Where(p => p.Selected).ToList();
+        foreach (var language in selectedLanguages!)
+        {
+            await service.DeleteAsync(language);
+        }
+
+        // Refresh the list
+        languages = await service.GetAllAsync();
+    }
+
+}
