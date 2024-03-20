@@ -1,4 +1,6 @@
-namespace BlazorLocalizationDemo.Services;
+using BlazorLocalizationDemo.Data.Entity.Localization;
+
+namespace BlazorLocalizationDemo.Services.Localization;
 
 public interface ILanguageService
 {

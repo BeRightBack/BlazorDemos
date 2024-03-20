@@ -1,6 +1,7 @@
 using BlazorLocalizationDemo.Data;
+using BlazorLocalizationDemo.Data.Entity.Localization;
 
-namespace BlazorLocalizationDemo.Services;
+namespace BlazorLocalizationDemo.Services.Localization;
 public class LanguageService : ILanguageService
 {
     private readonly LocalizationDbContext _context;

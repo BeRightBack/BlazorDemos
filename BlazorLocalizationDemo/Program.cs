@@ -1,21 +1,23 @@
 using BlazorLocalizationDemo.Components;
 using BlazorLocalizationDemo.Configuration;
 using BlazorLocalizationDemo.Data;
-using BlazorLocalizationDemo.Repository;
+using BlazorLocalizationDemo.Data.Repository;
+using BlazorLocalizationDemo.Resources;
 using BlazorLocalizationDemo.Services;
+using BlazorLocalizationDemo.Services.Localization;
 using DeepL;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
-using Resources;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+    .AddInteractiveServerComponents(options => options.DetailedErrors = true
+);
 builder.Services.AddControllers();
 
 var localizationString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -28,15 +30,12 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ILocalizationService, LocalizationService>();
 builder.Services.AddScoped<ILanguageService, LanguageService>();
 builder.Services.AddScoped<IStringLocalizer<SharedResource>, DbStringLocalizer<SharedResource>>();
+
 builder.Services.AddScoped<Translator>(sp =>
 {
-    var authKey = builder.Configuration["DeepLConfig:AuthKey"];
-    if (authKey == null)
-    {
-        throw new ArgumentNullException(nameof(authKey));
-    }
-
+    var authKey = builder.Configuration["DeepLConfig:AuthKey"] ?? throw new InvalidOperationException("DeepLConfig:AuthKey configuration value not found.");
     return new Translator(authKey);
+    
 });
 
 builder.Services.AddTransient<SeedLanguage>();

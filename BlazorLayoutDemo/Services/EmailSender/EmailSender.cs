@@ -7,7 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace BlazorLayoutDemo.Services;
 
-public class EmailSender(IConfiguration configuration) : IEmailSender<ApplicationUser>
+public class EmailSender(IConfiguration configuration) : IEmailSender
 {
     private readonly IConfiguration configuration = configuration;
 

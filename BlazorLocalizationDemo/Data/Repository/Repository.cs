@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace BlazorLocalizationDemo.Repository
+namespace BlazorLocalizationDemo.Data.Repository
 {
     public class Repository<TEntity, TContext> : IRepository<TEntity, TContext> where TEntity : class where TContext : DbContext
     {
@@ -28,7 +28,7 @@ namespace BlazorLocalizationDemo.Repository
 
             return entities.Find(id)!;
         }
-        
+
         public async Task<TEntity> GetAsync(Guid id)
         {
             var result = await entities.FindAsync(id);

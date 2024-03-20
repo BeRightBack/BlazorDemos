@@ -1,13 +1,15 @@
 ﻿
+using BlazorIdentityDemo.Entity;
+
 namespace BlazorIdentityDemo.Services
 {
-    public interface IEmailSender<TUser> where TUser : class
+    public interface IEmailSender
     {        
-        Task SendConfirmationLinkAsync(TUser user, string email, string confirmationLink);
+        Task SendConfirmationLinkAsync(ApplicationUser user, string email, string confirmationLink);
                 
-        Task SendPasswordResetLinkAsync(TUser user, string email, string resetLink);
+        Task SendPasswordResetLinkAsync(ApplicationUser user, string email, string resetLink);
                 
-        Task SendPasswordResetCodeAsync(TUser user, string email, string resetCode);
+        Task SendPasswordResetCodeAsync(ApplicationUser user, string email, string resetCode);
 
         Task SendEmailAsync(string to, string subject, string body, string? from = null);
         Task SendMessageAsync(string name, string from, string subject, string body);

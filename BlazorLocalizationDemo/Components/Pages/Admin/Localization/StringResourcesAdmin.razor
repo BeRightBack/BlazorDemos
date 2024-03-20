@@ -80,6 +80,8 @@ else
                             <label for="Name">Name</label>
                             <InputText id="Name" class="form-control" @bind-Value="stringResource!.Name" />
                         </div>
+                        <textarea @bind="InputTextToTranslate" rows="5" cols="50"></textarea>
+
                         <div class="form-group">
                             <label for="Value">Value</label>
                             <InputText id="Value" class="form-control" @bind-Value="stringResource.Value" />
@@ -154,7 +156,7 @@ else
     private IEnumerable<StringResource>? stringResources;
     private StringResource? selectedItem;
     private string searchTerm = "";
-
+    public string? InputTextToTranslate { get; set; }
     public string SourceLang => Configuration?["DeepLConfig:SourceLang"]!;
 
     private string LanguageIdString
@@ -315,13 +317,43 @@ else
         if (!string.IsNullOrEmpty(stringResource!.Name))
         {
             // Call the TranslateTextAsync method and pass the input text, source language, and target language
-            var result = await Translator.TranslateTextAsync(stringResource!.Name, SourceLang, TargetLang);
+            if (InputTextToTranslate != null)
+            {
+                var result = await Translator.TranslateTextAsync(InputTextToTranslate, SourceLang, TargetLang);
+
+                // Set the output text to the translated text
+                stringResource.Value = result.Text;
+                stringResource = await _service.GetAsync(id);
+
+                selectedItem = stringResource;
+                await _service.UpdateAsync(stringResource!);
+                selectedItem = null;
+                ShowPopup = false;
+            }
+            else
+            {
+                // Call the TranslateTextAsync method and pass the input text, source language, and target language
+                var result = await Translator.TranslateTextAsync(stringResource!.Name, SourceLang, TargetLang);
+
+                // Set the output text to the translated text
+                stringResource.Value = result.Text;
+                stringResource = await _service.GetAsync(id);
+
+                selectedItem = stringResource;
+                await _service.UpdateAsync(stringResource!);
+                selectedItem = null;
+                ShowPopup = false;
+            }
+            //var result = await Translator.TranslateTextAsync(stringResource!.Name, SourceLang, TargetLang);
 
             // Set the output text to the translated text
-            stringResource.Value = result.Text;
-            stringResource = await _service.GetAsync(id);
+            // stringResource.Value = result.Text;
+            // stringResource = await _service.GetAsync(id);
 
-            selectedItem = stringResource;
+            // selectedItem = stringResource;
+            // await _service.UpdateAsync(stringResource!);
+            // selectedItem = null;
+            // ShowPopup = false;
         }
     }
 

@@ -1,4 +1,4 @@
-﻿namespace BlazorLocalizationDemo.Repository
+﻿namespace BlazorLocalizationDemo.Data.Repository
 {
     public interface IRepository<TEntity, TContext> where TEntity : class
     {

@@ -1,0 +1,16 @@
+﻿@using System.Linq.Expressions
+@using System.Reflection
+@using System.ComponentModel.DataAnnotations
+@typeparam TModel
+@{
+    var memberExpression = For != null ? For.Body as MemberExpression ?? ((UnaryExpression)For.Body).Operand as MemberExpression : null;
+    var displayAttribute = memberExpression?.Member.GetCustomAttribute<DisplayAttribute>();
+    var displayName = displayAttribute != null ? Localizer[displayAttribute.Name ?? "Default"] : Localizer[memberExpression?.Member.Name ?? "Default"];
+
+}
+<label for="@For?.Name">@displayName</label>
+
+@code {
+    [Parameter]
+    public Expression<Func<TModel, object>>? For { get; set; }
+}

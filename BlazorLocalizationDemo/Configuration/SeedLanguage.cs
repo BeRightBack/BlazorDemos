@@ -1,4 +1,5 @@
 using BlazorLocalizationDemo.Data;
+using BlazorLocalizationDemo.Data.Entity.Localization;
 using Microsoft.Extensions.Options;
 using System.Globalization;
 
@@ -33,7 +34,7 @@ public class SeedLanguage
 
         foreach (var culture in _supportedCultures)
         {
-            var language = new Entity.Language
+            var language = new Language
             {
                 Id = Guid.NewGuid(),
                 Name = culture.DisplayName,

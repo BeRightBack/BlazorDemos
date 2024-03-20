@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BlazorLocalizationDemo.Entity;
+namespace BlazorLocalizationDemo.Data.Entity.Localization;
 public partial class Language
 {
     public Language()

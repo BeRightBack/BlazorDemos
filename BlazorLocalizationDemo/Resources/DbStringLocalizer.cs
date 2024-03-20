@@ -1,12 +1,12 @@
 ﻿
 using BlazorLocalizationDemo.Data;
-using BlazorLocalizationDemo.Entity;
-using BlazorLocalizationDemo.Services;
+using BlazorLocalizationDemo.Data.Entity.Localization;
+using BlazorLocalizationDemo.Services.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using System.Globalization;
 
-namespace Resources;
+namespace BlazorLocalizationDemo.Resources;
 public class DbStringLocalizer<T> : IStringLocalizer<T>
 {
     public static HttpContext HttpContext => new HttpContextAccessor().HttpContext!;
@@ -34,7 +34,7 @@ public class DbStringLocalizer<T> : IStringLocalizer<T>
             {
                 language = _languageService?.GetLanguages().FirstOrDefault();
             }
-            
+
             if (language != null)
             {
                 var stringResource = _localizationService?.GetStringResource(name, language.Id);
@@ -62,7 +62,7 @@ public class DbStringLocalizer<T> : IStringLocalizer<T>
                 }
                 //return new LocalizedString(name, stringResource?.Value ?? name, stringResource?.Value == null);
             }
-           return new LocalizedString(name, name, true);
+            return new LocalizedString(name, name, true);
         }
     }
 

@@ -1,7 +1,7 @@
 using BlazorLocalizationDemo.Data;
-using BlazorLocalizationDemo.Entity;
+using BlazorLocalizationDemo.Data.Entity.Localization;
 
-namespace BlazorLocalizationDemo.Services;
+namespace BlazorLocalizationDemo.Services.Localization;
 public class LocalizationService : ILocalizationService
 {
     private readonly LocalizationDbContext _context;

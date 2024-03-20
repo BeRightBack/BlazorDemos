@@ -1,4 +1,4 @@
-﻿using BlazorLocalizationDemo.Repository;
+﻿using BlazorLocalizationDemo.Data.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazorLocalizationDemo.Services

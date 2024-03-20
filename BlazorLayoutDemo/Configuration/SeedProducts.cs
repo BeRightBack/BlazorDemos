@@ -110,7 +110,7 @@ public class SeedProducts
         var i_LogitechG502Side = new Guid("baabfd5a-7851-49b6-b67b-046877de431c");
         var i_LogitechG502Bottom = new Guid("139e1fb7-6f21-4d2c-8987-26091744fa4c");
 
-        if (_context.Database == null)
+        if (_context!.Database == null)
         {
             throw new Exception("DB is null");
         }
@@ -120,10 +120,10 @@ public class SeedProducts
         {
             var categoryList = new List<Category>
             {
-                new Category { Id = laptop, Name = "Laptop", SeoUrl = "Laptop", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now, ParentCategoryId = Guid.Empty },
-                new Category { Id = mouse, Name = "Mouse", SeoUrl = "Mouse", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now, ParentCategoryId = Guid.Empty },
-                new Category { Id = processors, Name = "Processors", SeoUrl = "Processors", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now, ParentCategoryId = Guid.Empty },
-                new Category { Id = videocard , Name = "Video Card", SeoUrl = "Video-Card", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now, ParentCategoryId = Guid.Empty }
+                new() { Id = laptop, Name = "Laptop", SeoUrl = "Laptop", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now, ParentCategoryId = Guid.Empty },
+                new() { Id = mouse, Name = "Mouse", SeoUrl = "Mouse", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now, ParentCategoryId = Guid.Empty },
+                new() { Id = processors, Name = "Processors", SeoUrl = "Processors", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now, ParentCategoryId = Guid.Empty },
+                new() { Id = videocard , Name = "Video Card", SeoUrl = "Video-Card", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now, ParentCategoryId = Guid.Empty }
             };
             _context.Categories.AddRange(categoryList);
             _context.SaveChanges();
@@ -133,12 +133,12 @@ public class SeedProducts
         {
             var manufacturerList = new List<Manufacturer>
             {
-                new Manufacturer { Id = acer, Name = "Acer", SeoUrl = "Acer", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Manufacturer { Id = amd, Name = "AMD", SeoUrl = "AMD", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Manufacturer { Id = asus, Name = "Asus", SeoUrl = "Asus", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Manufacturer { Id = intel, Name = "Intel", SeoUrl = "Intel", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Manufacturer { Id = logitech, Name = "Logitech", SeoUrl = "Logitech", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Manufacturer { Id = razer, Name = "Razer", SeoUrl = "Razer", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now }
+                new() { Id = acer, Name = "Acer", SeoUrl = "Acer", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = amd, Name = "AMD", SeoUrl = "AMD", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = asus, Name = "Asus", SeoUrl = "Asus", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = intel, Name = "Intel", SeoUrl = "Intel", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = logitech, Name = "Logitech", SeoUrl = "Logitech", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = razer, Name = "Razer", SeoUrl = "Razer", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now }
             };
             _context.Manufacturers.AddRange(manufacturerList);
             _context.SaveChanges();
@@ -149,63 +149,63 @@ public class SeedProducts
         {
             var specificationList = new List<Specification>
             {
-                new Specification { Id = numberOfCores, Name = "# Cores", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = numberOfThreads, Name = "# of Threads", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = bit64Support, Name = "64-Bit Support", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = accessories, Name = "Accessories", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = battery, Name = "Battery", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = brand, Name = "Brand", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = buttons, Name = "Buttons", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = color, Name = "Color", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = coolingDevice, Name = "Cooling Device", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = coreName, Name = "Core Name", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = chipset, Name = "Chipset", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = cpuSocketType, Name = "CPU Socket Type", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = cudaCore, Name = "CUDA Core", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = dimensions, Name = "Dimensions", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = display, Name = "Display", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = engineClock, Name = "Engine Clock", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = features, Name = "Features", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = gamingSeries, Name = "Gaming Series", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = graphic, Name = "Graphic", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = graphicsEngine, Name = "Graphics Engine", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = handOrientation, Name = "Hand Orientation", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = hyperThreadingSupport, Name = "Hyper-Threading Support", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = _interface, Name = "Interface", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = keyboard, Name = "Keyboard", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = l2Cache, Name = "L2 Cache", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = l3Cache, Name = "L3 Cache", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = manufacturingTech, Name = "Manufacturing Tech", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = maxTurboFrequency, Name = "Max Turbo Frequency", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = maximumDpi, Name = "Maximum dpi", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = memory, Name = "Memory", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = memoryClock, Name = "Memory Clock", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = memoryInterface, Name = "Memory Interface", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = model, Name = "Model", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = mouseAdjustableWeight, Name = "Mouse Adjustable Weight", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = mouseGripStyle, Name = "Mouse Grip Style", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = name, Name = "Name", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = networking, Name = "Networking", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = operating, Name = "Operating", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = operatingFrequency, Name = "Operating Frequency", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = operatingSystemSupported, Name = "Operating System Supported", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = powerConnectors, Name = "Power Connectors", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = processor, Name = "Processor", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = processorsType, Name = "Processors Type", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = resolution, Name = "Resolution", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = scrollingCapability, Name = "Scrolling Capability", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = series, Name = "Series", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = software, Name = "Software", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = storage, Name = "Storage", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = systemRequirement, Name = "System Requirement", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = thermalDesignPower, Name = "Thermal Design Power", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = trackingMethod, Name = "Tracking Method", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = type, Name = "Type", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = videoMemory, Name = "Video Memory", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = virtualizationTechnologySupport, Name = "Virtualization Technology Support", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = vr, Name = "VR", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = webCam, Name = "WebCam", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
-                new Specification { Id = weight, Name = "Weight", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now }
+                new() { Id = numberOfCores, Name = "# Cores", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = numberOfThreads, Name = "# of Threads", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = bit64Support, Name = "64-Bit Support", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = accessories, Name = "Accessories", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = battery, Name = "Battery", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = brand, Name = "Brand", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = buttons, Name = "Buttons", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = color, Name = "Color", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = coolingDevice, Name = "Cooling Device", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = coreName, Name = "Core Name", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = chipset, Name = "Chipset", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = cpuSocketType, Name = "CPU Socket Type", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = cudaCore, Name = "CUDA Core", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = dimensions, Name = "Dimensions", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = display, Name = "Display", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = engineClock, Name = "Engine Clock", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = features, Name = "Features", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = gamingSeries, Name = "Gaming Series", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = graphic, Name = "Graphic", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = graphicsEngine, Name = "Graphics Engine", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = handOrientation, Name = "Hand Orientation", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = hyperThreadingSupport, Name = "Hyper-Threading Support", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = _interface, Name = "Interface", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = keyboard, Name = "Keyboard", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = l2Cache, Name = "L2 Cache", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = l3Cache, Name = "L3 Cache", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = manufacturingTech, Name = "Manufacturing Tech", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = maxTurboFrequency, Name = "Max Turbo Frequency", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = maximumDpi, Name = "Maximum dpi", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = memory, Name = "Memory", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = memoryClock, Name = "Memory Clock", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = memoryInterface, Name = "Memory Interface", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = model, Name = "Model", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = mouseAdjustableWeight, Name = "Mouse Adjustable Weight", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = mouseGripStyle, Name = "Mouse Grip Style", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = name, Name = "Name", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = networking, Name = "Networking", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = operating, Name = "Operating", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = operatingFrequency, Name = "Operating Frequency", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = operatingSystemSupported, Name = "Operating System Supported", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = powerConnectors, Name = "Power Connectors", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = processor, Name = "Processor", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = processorsType, Name = "Processors Type", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = resolution, Name = "Resolution", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = scrollingCapability, Name = "Scrolling Capability", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = series, Name = "Series", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = software, Name = "Software", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = storage, Name = "Storage", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = systemRequirement, Name = "System Requirement", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = thermalDesignPower, Name = "Thermal Design Power", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = trackingMethod, Name = "Tracking Method", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = type, Name = "Type", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = videoMemory, Name = "Video Memory", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = virtualizationTechnologySupport, Name = "Virtualization Technology Support", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = vr, Name = "VR", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = webCam, Name = "WebCam", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now },
+                new() { Id = weight, Name = "Weight", Published = true, DateAdded = DateTime.Now, DateModified = DateTime.Now }
             };
             _context.Specifications.AddRange(specificationList);
             _context.SaveChanges();
@@ -216,21 +216,21 @@ public class SeedProducts
         {
             var imageList = new List<Image>
             {
-                new Image { Id = i_RogG7Front, FileName = "/Images/test_images/ROG G701VI (7th Gen Intel Core).jpg" },
-                new Image { Id = i_RogG7Back, FileName = "/Images/test_images/ROG G701VI (7th Gen Intel Core) back.jpg" },
-                new Image { Id = i_Predator17XFront, FileName = "/Images/test_images/Predator_17X.png" },
-                new Image { Id = i_Predator17XBack, FileName = "/Images/test_images/Predator_17X back.png" },
-                new Image { Id = i_AsusGtx1080tiFounder, FileName = "/Images/test_images/asus gtx 1080 ti founder.jpg" },
-                new Image { Id = i_AsusGtx1080tiFounder2, FileName = "/Images/test_images/asus gtx 1080 ti founder 2.png" },
-                new Image { Id = i_AsusGgtx1070Strix, FileName = "/Images/test_images/asus gtx 1070 strix.png" },
-                new Image { Id = i_RogStrixRx480O8G, FileName = "/Images/test_images/rog strix rx480 O8G gaming.jpg" },
-                new Image { Id = i_IntelCorei77700K, FileName = "/Images/test_images/Intel Core i7-7700K.jpg" },
-                new Image { Id = i_TheRazerBladeFront, FileName = "/Images/test_images/The Razer Blade Front.jpg" },
-                new Image { Id = i_TheRazerBladeSlide, FileName = "/Images/test_images/The Razer Blade Slide.jpg" },
-                new Image { Id = i_Ryzen71800x, FileName = "/Images/test_images/ryzen 7 1800x.jpg" },
-                new Image { Id = i_LogitechG502Main, FileName = "/Images/test_images/Logitech G502 main.jpg" },
-                new Image { Id = i_LogitechG502Side, FileName = "/Images/test_images/Logitech G502 side.jpg" },
-                new Image { Id = i_LogitechG502Bottom, FileName = "/Images/test_images/Logitech G502 bottom.jpg" }
+                new() { Id = i_RogG7Front, FileName = "/Images/test_images/ROG G701VI (7th Gen Intel Core).jpg" },
+                new() { Id = i_RogG7Back, FileName = "/Images/test_images/ROG G701VI (7th Gen Intel Core) back.jpg" },
+                new() { Id = i_Predator17XFront, FileName = "/Images/test_images/Predator_17X.png" },
+                new() { Id = i_Predator17XBack, FileName = "/Images/test_images/Predator_17X back.png" },
+                new() { Id = i_AsusGtx1080tiFounder, FileName = "/Images/test_images/asus gtx 1080 ti founder.jpg" },
+                new() { Id = i_AsusGtx1080tiFounder2, FileName = "/Images/test_images/asus gtx 1080 ti founder 2.png" },
+                new() { Id = i_AsusGgtx1070Strix, FileName = "/Images/test_images/asus gtx 1070 strix.png" },
+                new() { Id = i_RogStrixRx480O8G, FileName = "/Images/test_images/rog strix rx480 O8G gaming.jpg" },
+                new() { Id = i_IntelCorei77700K, FileName = "/Images/test_images/Intel Core i7-7700K.jpg" },
+                new() { Id = i_TheRazerBladeFront, FileName = "/Images/test_images/The Razer Blade Front.jpg" },
+                new() { Id = i_TheRazerBladeSlide, FileName = "/Images/test_images/The Razer Blade Slide.jpg" },
+                new() { Id = i_Ryzen71800x, FileName = "/Images/test_images/ryzen 7 1800x.jpg" },
+                new() { Id = i_LogitechG502Main, FileName = "/Images/test_images/Logitech G502 main.jpg" },
+                new() { Id = i_LogitechG502Side, FileName = "/Images/test_images/Logitech G502 side.jpg" },
+                new() { Id = i_LogitechG502Bottom, FileName = "/Images/test_images/Logitech G502 bottom.jpg" }
             };
             _context.Images.AddRange(imageList);
             _context.SaveChanges();
@@ -258,38 +258,38 @@ public class SeedProducts
                 Published = true,
                 DateAdded = DateTime.Now,
                 DateModified = DateTime.Now,
-                Categories = new List<ProductCategoryMapping>
-                    {
+                Categories =
+                    [
                         new ProductCategoryMapping { ProductId = _RogG7, CategoryId = laptop }
-                    },
-                Manufacturers = new List<ProductManufacturerMapping>
-                    {
+                    ],
+                Manufacturers =
+                    [
                         new ProductManufacturerMapping { ProductId = _RogG7, ManufacturerId = asus }
-                    },
-                Images = new List<ProductImageMapping>
-                    {
+                    ],
+                Images =
+                    [
                         new ProductImageMapping { ProductId = _RogG7, ImageId = i_RogG7Front, SortOrder = 0, Position = 0 },
                         new ProductImageMapping { ProductId = _RogG7, ImageId = i_RogG7Back, SortOrder = 0, Position = 1 }
-                    },
-                Specifications = new List<ProductSpecificationMapping>
-                    {
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = processor, Value = "Intel® Core™ i7 7820HK Processor", SortOrder = 0, Position = 0 },
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = operating, Value = "Windows 10 Home", SortOrder = 0, Position = 1 },
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = chipset, Value = "Intel® CM238 Express Chipset", SortOrder = 0, Position = 2 },
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = memory, Value = "DDR4 2400MHz SDRAM, up to 64 GB SDRAM ( Overclocking to 2800MHz Supported )", SortOrder = 0, Position = 3 },
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = display, Value = "17.3&quot; (16:9) LED backlit FHD (1920x1080) 120Hz Anti-Glare Panel with 72% NTSC&amp;nbsp;&lt;br /&gt;17.3&quot; (16:9) LED backlit UHD (3840x2160) 60Hz Anti-Glare Panel with 100% NTSC&amp;nbsp;&lt;br /&gt;With WideView Technology", SortOrder = 0, Position = 4 },
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = graphic, Value = "NVIDIA GeForce GTX 1080", SortOrder = 0, Position = 5 },
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = storage, Value = "<strong>Solid State Drives:</strong><br />256GB/512GB PCIE Gen3X4 SSD RAID 0 Support", SortOrder = 0, Position = 6 },
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = keyboard, Value = "Chicklet keyboard with isolated Num key", SortOrder = 0, Position = 7 },
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = webCam, Value = "HD Web Camera", SortOrder = 0, Position = 8 },
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = networking, Value = "<strong>Wi-Fi</strong><br />Integrated 802.11 AC", SortOrder = 0, Position = 9 },
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = _interface, Value = "1 x Microphone-in jack<br />1 x Headphone-out jack&nbsp;<br />2 x Type A USB3.0 (USB3.1 GEN1)&nbsp;<br />3 x Type A USB3.0 (USB3.1 GEN1)&nbsp;<br />1 x HDMI&nbsp;<br />1 x mini Display Port&nbsp;", SortOrder = 0, Position = 10 },
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = battery, Value = "6 Cells 93 Whrs Battery", SortOrder = 0, Position = 11 },
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = dimensions, Value = "429 x 309 x 44 mm (WxDxH)", SortOrder = 0, Position = 12 },
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = weight, Value = "with Battery", SortOrder = 0, Position = 13 },
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = vr, Value = "VR Ready", SortOrder = 0, Position = 14 },
-                        new ProductSpecificationMapping { ProductId = _RogG7, SpecificationId = gamingSeries, Value = "G Series", SortOrder = 0, Position = 15 }
-                    }
+                    ],
+                Specifications =
+                    [
+                        new() { ProductId = _RogG7, SpecificationId = processor, Value = "Intel® Core™ i7 7820HK Processor", SortOrder = 0, Position = 0 },
+                        new() { ProductId = _RogG7, SpecificationId = operating, Value = "Windows 10 Home", SortOrder = 0, Position = 1 },
+                        new() { ProductId = _RogG7, SpecificationId = chipset, Value = "Intel® CM238 Express Chipset", SortOrder = 0, Position = 2 },
+                        new() { ProductId = _RogG7, SpecificationId = memory, Value = "DDR4 2400MHz SDRAM, up to 64 GB SDRAM ( Overclocking to 2800MHz Supported )", SortOrder = 0, Position = 3 },
+                        new() { ProductId = _RogG7, SpecificationId = display, Value = "17.3&quot; (16:9) LED backlit FHD (1920x1080) 120Hz Anti-Glare Panel with 72% NTSC&amp;nbsp;&lt;br /&gt;17.3&quot; (16:9) LED backlit UHD (3840x2160) 60Hz Anti-Glare Panel with 100% NTSC&amp;nbsp;&lt;br /&gt;With WideView Technology", SortOrder = 0, Position = 4 },
+                        new() { ProductId = _RogG7, SpecificationId = graphic, Value = "NVIDIA GeForce GTX 1080", SortOrder = 0, Position = 5 },
+                        new() { ProductId = _RogG7, SpecificationId = storage, Value = "<strong>Solid State Drives:</strong><br />256GB/512GB PCIE Gen3X4 SSD RAID 0 Support", SortOrder = 0, Position = 6 },
+                        new() { ProductId = _RogG7, SpecificationId = keyboard, Value = "Chicklet keyboard with isolated Num key", SortOrder = 0, Position = 7 },
+                        new() { ProductId = _RogG7, SpecificationId = webCam, Value = "HD Web Camera", SortOrder = 0, Position = 8 },
+                        new() { ProductId = _RogG7, SpecificationId = networking, Value = "<strong>Wi-Fi</strong><br />Integrated 802.11 AC", SortOrder = 0, Position = 9 },
+                        new() { ProductId = _RogG7, SpecificationId = _interface, Value = "1 x Microphone-in jack<br />1 x Headphone-out jack&nbsp;<br />2 x Type A USB3.0 (USB3.1 GEN1)&nbsp;<br />3 x Type A USB3.0 (USB3.1 GEN1)&nbsp;<br />1 x HDMI&nbsp;<br />1 x mini Display Port&nbsp;", SortOrder = 0, Position = 10 },
+                        new() { ProductId = _RogG7, SpecificationId = battery, Value = "6 Cells 93 Whrs Battery", SortOrder = 0, Position = 11 },
+                        new() { ProductId = _RogG7, SpecificationId = dimensions, Value = "429 x 309 x 44 mm (WxDxH)", SortOrder = 0, Position = 12 },
+                        new() { ProductId = _RogG7, SpecificationId = weight, Value = "with Battery", SortOrder = 0, Position = 13 },
+                        new() { ProductId = _RogG7, SpecificationId = vr, Value = "VR Ready", SortOrder = 0, Position = 14 },
+                        new() { ProductId = _RogG7, SpecificationId = gamingSeries, Value = "G Series", SortOrder = 0, Position = 15 }
+                    ]
             };
             _context.Products.Add(product);
             _context.SaveChanges();
@@ -308,34 +308,34 @@ public class SeedProducts
                 Published = true,
                 DateAdded = DateTime.Now,
                 DateModified = DateTime.Now,
-                Categories = new List<ProductCategoryMapping>
-                    {
+                Categories =
+                    [
                         new ProductCategoryMapping { ProductId = _AcerPredatorGx, CategoryId = laptop }
-                    },
-                Manufacturers = new List<ProductManufacturerMapping>
-                    {
+                    ],
+                Manufacturers =
+                    [
                         new ProductManufacturerMapping { ProductId = _AcerPredatorGx, ManufacturerId = acer }
-                    },
-                Images = new List<ProductImageMapping>
-                    {
+                    ],
+                Images =
+                    [
                         new ProductImageMapping { ProductId = _AcerPredatorGx, ImageId = i_Predator17XFront, SortOrder = 0, Position = 0 },
                         new ProductImageMapping { ProductId = _AcerPredatorGx, ImageId = i_Predator17XBack, SortOrder = 0, Position = 1 }
-                    },
-                Specifications = new List<ProductSpecificationMapping>
-                    {
-                        new ProductSpecificationMapping { ProductId = _AcerPredatorGx, SpecificationId = processor, Value = "Intel® Core™ i7 7820HK Processor", SortOrder = 0, Position = 0 },
-                        new ProductSpecificationMapping { ProductId = _AcerPredatorGx, SpecificationId = operating, Value = "Windows 10 Home", SortOrder = 0, Position = 1 },
-                        new ProductSpecificationMapping { ProductId = _AcerPredatorGx, SpecificationId = memory, Value = "32 GB DDR4 2400MHz (16 GB x 2)", SortOrder = 0, Position = 2 },
-                        new ProductSpecificationMapping { ProductId = _AcerPredatorGx, SpecificationId = display, Value = "17.3\" 4K/UHD<br />3840 x 2160<br />LED-backlit IPS display with NVIDIA G-SYNC technology<br />Wide viewing angle", SortOrder = 0, Position = 3 },
-                        new ProductSpecificationMapping { ProductId = _AcerPredatorGx, SpecificationId = graphic, Value = "NVIDIA GeForce GTX 1080", SortOrder = 0, Position = 4 },
-                        new ProductSpecificationMapping { ProductId = _AcerPredatorGx, SpecificationId = storage, Value = "1 TB HDD + 512 GB SSD", SortOrder = 0, Position = 5 },
-                        new ProductSpecificationMapping { ProductId = _AcerPredatorGx, SpecificationId = webCam, Value = "HD Webcam (1280 x 720)", SortOrder = 0, Position = 6 },
-                        new ProductSpecificationMapping { ProductId = _AcerPredatorGx, SpecificationId = networking, Value = "Killer Double Shot Pro Wireless-AC 1535 802.11ac WiFi featuring 2x2 MU-MIMO technology (Dual-Band 2.4GHz and 5GHz)", SortOrder = 0, Position = 7 },
-                        new ProductSpecificationMapping { ProductId = _AcerPredatorGx, SpecificationId = _interface, Value = "4 x USB 3.0 (One with Power-off Charging)<br />1 x Thunderbolt 3 (Full USB 3.1 Type C)<br />1 x DisplayPort<br />1 x HDMI 2.0<br />1 x Headphone / Speaker / Line-out Jack", SortOrder = 0, Position = 8 },
-                        new ProductSpecificationMapping { ProductId = _AcerPredatorGx, SpecificationId = battery, Value = "8-cell Li-ion Battery (6000 mAh)", SortOrder = 0, Position = 9 },
-                        new ProductSpecificationMapping { ProductId = _AcerPredatorGx, SpecificationId = dimensions, Value = "16.65\" x 12.66\" x 1.77\" (WxDxH)", SortOrder = 0, Position = 10 },
-                        new ProductSpecificationMapping { ProductId = _AcerPredatorGx, SpecificationId = weight, Value = "10.03 lbs.", SortOrder = 0, Position = 11 }
-                    }
+                    ],
+                Specifications =
+                    [
+                        new() { ProductId = _AcerPredatorGx, SpecificationId = processor, Value = "Intel® Core™ i7 7820HK Processor", SortOrder = 0, Position = 0 },
+                        new() { ProductId = _AcerPredatorGx, SpecificationId = operating, Value = "Windows 10 Home", SortOrder = 0, Position = 1 },
+                        new() { ProductId = _AcerPredatorGx, SpecificationId = memory, Value = "32 GB DDR4 2400MHz (16 GB x 2)", SortOrder = 0, Position = 2 },
+                        new() { ProductId = _AcerPredatorGx, SpecificationId = display, Value = "17.3\" 4K/UHD<br />3840 x 2160<br />LED-backlit IPS display with NVIDIA G-SYNC technology<br />Wide viewing angle", SortOrder = 0, Position = 3 },
+                        new() { ProductId = _AcerPredatorGx, SpecificationId = graphic, Value = "NVIDIA GeForce GTX 1080", SortOrder = 0, Position = 4 },
+                        new() { ProductId = _AcerPredatorGx, SpecificationId = storage, Value = "1 TB HDD + 512 GB SSD", SortOrder = 0, Position = 5 },
+                        new() { ProductId = _AcerPredatorGx, SpecificationId = webCam, Value = "HD Webcam (1280 x 720)", SortOrder = 0, Position = 6 },
+                        new() { ProductId = _AcerPredatorGx, SpecificationId = networking, Value = "Killer Double Shot Pro Wireless-AC 1535 802.11ac WiFi featuring 2x2 MU-MIMO technology (Dual-Band 2.4GHz and 5GHz)", SortOrder = 0, Position = 7 },
+                        new() { ProductId = _AcerPredatorGx, SpecificationId = _interface, Value = "4 x USB 3.0 (One with Power-off Charging)<br />1 x Thunderbolt 3 (Full USB 3.1 Type C)<br />1 x DisplayPort<br />1 x HDMI 2.0<br />1 x Headphone / Speaker / Line-out Jack", SortOrder = 0, Position = 8 },
+                        new() { ProductId = _AcerPredatorGx, SpecificationId = battery, Value = "8-cell Li-ion Battery (6000 mAh)", SortOrder = 0, Position = 9 },
+                        new() { ProductId = _AcerPredatorGx, SpecificationId = dimensions, Value = "16.65\" x 12.66\" x 1.77\" (WxDxH)", SortOrder = 0, Position = 10 },
+                        new() { ProductId = _AcerPredatorGx, SpecificationId = weight, Value = "10.03 lbs.", SortOrder = 0, Position = 11 }
+                    ]
             };
             _context.Products.Add(product2);
             _context.SaveChanges();
@@ -354,34 +354,34 @@ public class SeedProducts
                 Published = true,
                 DateAdded = DateTime.Now,
                 DateModified = DateTime.Now,
-                Categories = new List<ProductCategoryMapping>
-                    {
+                Categories =
+                    [
                         new ProductCategoryMapping { ProductId = _AsusGtx1080tiFounder, CategoryId = videocard }
-                    },
-                Manufacturers = new List<ProductManufacturerMapping>
-                    {
+                    ],
+                Manufacturers =
+                    [
                         new ProductManufacturerMapping { ProductId = _AsusGtx1080tiFounder, ManufacturerId = asus }
-                    },
-                Images = new List<ProductImageMapping>
-                    {
+                    ],
+                Images =
+                    [
                         new ProductImageMapping { ProductId = _AsusGtx1080tiFounder, ImageId = i_AsusGtx1080tiFounder, SortOrder = 0, Position = 0 },
                         new ProductImageMapping { ProductId = _AsusGtx1080tiFounder, ImageId = i_AsusGtx1080tiFounder2, SortOrder = 0, Position = 1 }
-                    },
-                Specifications = new List<ProductSpecificationMapping>
-                    {
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1080tiFounder, SpecificationId = graphicsEngine, Value = "NVIDIA GeForce GTX 1080 TI", SortOrder = 0, Position = 0 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1080tiFounder, SpecificationId = videoMemory, Value = "GDDR5X 11GB", SortOrder = 0, Position = 1 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1080tiFounder, SpecificationId = engineClock, Value = "GPU Boost Clock : 1582 MHz<br />GPU Base Clock : 1480 MHz", SortOrder = 0, Position = 2 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1080tiFounder, SpecificationId = cudaCore, Value = "3584", SortOrder = 0, Position = 3 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1080tiFounder, SpecificationId = memoryClock, Value = "11010 MHz", SortOrder = 0, Position = 4 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1080tiFounder, SpecificationId = memoryInterface, Value = "352-bit", SortOrder = 0, Position = 5 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1080tiFounder, SpecificationId = resolution, Value = "Digital Max Resolution: 7680 x 4320", SortOrder = 0, Position = 6 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1080tiFounder, SpecificationId = _interface, Value = "HDMI Output : Yes x 1 (Native) (HDMI 2.0)<br />Display Port : Yes x 3 (Native) (Regular DP)<br />HDCP Support : Yes", SortOrder = 0, Position = 7 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1080tiFounder, SpecificationId = powerConnectors, Value = "1 x 6-pin, 1 x 8-pin", SortOrder = 0, Position = 8 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1080tiFounder, SpecificationId = accessories, Value = "1 x DP-DVI Dongle", SortOrder = 0, Position = 9 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1080tiFounder, SpecificationId = software, Value = "ASUS GPU Tweak II & Driver", SortOrder = 0, Position = 10 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1080tiFounder, SpecificationId = dimensions, Value = "10.5 \" x 4.376 \" x 1.5 \" Inch<br />26.67 x 11.12 x3.81 Centimeter", SortOrder = 0, Position = 11 }
-                    }
+                    ],
+                Specifications =
+                    [
+                        new() { ProductId = _AsusGtx1080tiFounder, SpecificationId = graphicsEngine, Value = "NVIDIA GeForce GTX 1080 TI", SortOrder = 0, Position = 0 },
+                        new() { ProductId = _AsusGtx1080tiFounder, SpecificationId = videoMemory, Value = "GDDR5X 11GB", SortOrder = 0, Position = 1 },
+                        new() { ProductId = _AsusGtx1080tiFounder, SpecificationId = engineClock, Value = "GPU Boost Clock : 1582 MHz<br />GPU Base Clock : 1480 MHz", SortOrder = 0, Position = 2 },
+                        new() { ProductId = _AsusGtx1080tiFounder, SpecificationId = cudaCore, Value = "3584", SortOrder = 0, Position = 3 },
+                        new() { ProductId = _AsusGtx1080tiFounder, SpecificationId = memoryClock, Value = "11010 MHz", SortOrder = 0, Position = 4 },
+                        new() { ProductId = _AsusGtx1080tiFounder, SpecificationId = memoryInterface, Value = "352-bit", SortOrder = 0, Position = 5 },
+                        new() { ProductId = _AsusGtx1080tiFounder, SpecificationId = resolution, Value = "Digital Max Resolution: 7680 x 4320", SortOrder = 0, Position = 6 },
+                        new() { ProductId = _AsusGtx1080tiFounder, SpecificationId = _interface, Value = "HDMI Output : Yes x 1 (Native) (HDMI 2.0)<br />Display Port : Yes x 3 (Native) (Regular DP)<br />HDCP Support : Yes", SortOrder = 0, Position = 7 },
+                        new() { ProductId = _AsusGtx1080tiFounder, SpecificationId = powerConnectors, Value = "1 x 6-pin, 1 x 8-pin", SortOrder = 0, Position = 8 },
+                        new() { ProductId = _AsusGtx1080tiFounder, SpecificationId = accessories, Value = "1 x DP-DVI Dongle", SortOrder = 0, Position = 9 },
+                        new() { ProductId = _AsusGtx1080tiFounder, SpecificationId = software, Value = "ASUS GPU Tweak II & Driver", SortOrder = 0, Position = 10 },
+                        new() { ProductId = _AsusGtx1080tiFounder, SpecificationId = dimensions, Value = "10.5 \" x 4.376 \" x 1.5 \" Inch<br />26.67 x 11.12 x3.81 Centimeter", SortOrder = 0, Position = 11 }
+                    ]
             };
             _context.Products.Add(product3);
             _context.SaveChanges();
@@ -400,33 +400,33 @@ public class SeedProducts
                 Published = true,
                 DateAdded = DateTime.Now,
                 DateModified = DateTime.Now,
-                Categories = new List<ProductCategoryMapping>
-                    {
+                Categories =
+                    [
                         new ProductCategoryMapping { ProductId = _AsusGtx1070Strix, CategoryId = videocard }
-                    },
-                Manufacturers = new List<ProductManufacturerMapping>
-                    {
+                    ],
+                Manufacturers =
+                    [
                         new ProductManufacturerMapping { ProductId = _AsusGtx1070Strix, ManufacturerId = asus }
-                    },
-                Images = new List<ProductImageMapping>
-                    {
+                    ],
+                Images =
+                    [
                         new ProductImageMapping { ProductId = _AsusGtx1070Strix, ImageId = i_AsusGgtx1070Strix, SortOrder = 0, Position = 0 }
-                    },
-                Specifications = new List<ProductSpecificationMapping>
-                    {
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1070Strix, SpecificationId = graphicsEngine, Value = "NVIDIA GeForce GTX 1070", SortOrder = 0, Position = 0 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1070Strix, SpecificationId = videoMemory, Value = "GDDR5 8GB", SortOrder = 0, Position = 1 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1070Strix, SpecificationId = engineClock, Value = "OC Mode - GPU Boost Clock : 1860 MHz , GPU Base Clock : 1657 MHz<br />Gaming Mode (Default) - GPU Boost Clock : 1835 MHz , GPU Base Clock : 1632 MHz<br />*Retail goods are with default Gaming Mode, OC Mode can be adjusted with one click on GPU Tweak II", SortOrder = 0, Position = 2 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1070Strix, SpecificationId = cudaCore, Value = "1920", SortOrder = 0, Position = 3 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1070Strix, SpecificationId = memoryClock, Value = "8008 MHz", SortOrder = 0, Position = 4 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1070Strix, SpecificationId = memoryInterface, Value = "256-bit", SortOrder = 0, Position = 5 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1070Strix, SpecificationId = resolution, Value = "Digital Max Resolution:7680 x 4320", SortOrder = 0, Position = 6 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1070Strix, SpecificationId = _interface, Value = "DVI Output : Yes x 1 (Native) (DVI-D)<br />HDMI Output : Yes x 2 (Native) (HDMI 2.0)<br />Display Port : Yes x 2 (Native) (Regular DP)<br />HDCP Support : Yes", SortOrder = 0, Position = 7 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1070Strix, SpecificationId = powerConnectors, Value = "1 x 8-pin", SortOrder = 0, Position = 8 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1070Strix, SpecificationId = accessories, Value = "2 x ROG Cable Ties", SortOrder = 0, Position = 9 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1070Strix, SpecificationId = software, Value = "ASUS GPU Tweak II & Driver", SortOrder = 0, Position = 10 },
-                        new ProductSpecificationMapping { ProductId = _AsusGtx1070Strix, SpecificationId = dimensions, Value = "11.73\" x 5.28\" x 1.57\" Inch<br />29.8 x 13.4 x4 Centimeter", SortOrder = 0, Position = 11 }
-                    }
+                    ],
+                Specifications =
+                    [
+                        new() { ProductId = _AsusGtx1070Strix, SpecificationId = graphicsEngine, Value = "NVIDIA GeForce GTX 1070", SortOrder = 0, Position = 0 },
+                        new() { ProductId = _AsusGtx1070Strix, SpecificationId = videoMemory, Value = "GDDR5 8GB", SortOrder = 0, Position = 1 },
+                        new() { ProductId = _AsusGtx1070Strix, SpecificationId = engineClock, Value = "OC Mode - GPU Boost Clock : 1860 MHz , GPU Base Clock : 1657 MHz<br />Gaming Mode (Default) - GPU Boost Clock : 1835 MHz , GPU Base Clock : 1632 MHz<br />*Retail goods are with default Gaming Mode, OC Mode can be adjusted with one click on GPU Tweak II", SortOrder = 0, Position = 2 },
+                        new() { ProductId = _AsusGtx1070Strix, SpecificationId = cudaCore, Value = "1920", SortOrder = 0, Position = 3 },
+                        new() { ProductId = _AsusGtx1070Strix, SpecificationId = memoryClock, Value = "8008 MHz", SortOrder = 0, Position = 4 },
+                        new() { ProductId = _AsusGtx1070Strix, SpecificationId = memoryInterface, Value = "256-bit", SortOrder = 0, Position = 5 },
+                        new() { ProductId = _AsusGtx1070Strix, SpecificationId = resolution, Value = "Digital Max Resolution:7680 x 4320", SortOrder = 0, Position = 6 },
+                        new() { ProductId = _AsusGtx1070Strix, SpecificationId = _interface, Value = "DVI Output : Yes x 1 (Native) (DVI-D)<br />HDMI Output : Yes x 2 (Native) (HDMI 2.0)<br />Display Port : Yes x 2 (Native) (Regular DP)<br />HDCP Support : Yes", SortOrder = 0, Position = 7 },
+                        new() { ProductId = _AsusGtx1070Strix, SpecificationId = powerConnectors, Value = "1 x 8-pin", SortOrder = 0, Position = 8 },
+                        new() { ProductId = _AsusGtx1070Strix, SpecificationId = accessories, Value = "2 x ROG Cable Ties", SortOrder = 0, Position = 9 },
+                        new() { ProductId = _AsusGtx1070Strix, SpecificationId = software, Value = "ASUS GPU Tweak II & Driver", SortOrder = 0, Position = 10 },
+                        new() { ProductId = _AsusGtx1070Strix, SpecificationId = dimensions, Value = "11.73\" x 5.28\" x 1.57\" Inch<br />29.8 x 13.4 x4 Centimeter", SortOrder = 0, Position = 11 }
+                    ]
             };
             _context.Products.Add(product4);
             _context.SaveChanges();
@@ -448,32 +448,32 @@ public class SeedProducts
                 Published = true,
                 DateAdded = DateTime.Now,
                 DateModified = DateTime.Now,
-                Categories = new List<ProductCategoryMapping>
-                    {
+                Categories =
+                    [
                         new ProductCategoryMapping { ProductId = _RogStrixRx480O8G, CategoryId = videocard }
-                    },
-                Manufacturers = new List<ProductManufacturerMapping>
-                    {
+                    ],
+                Manufacturers =
+                    [
                         new ProductManufacturerMapping { ProductId = _RogStrixRx480O8G, ManufacturerId = asus }
-                    },
-                Images = new List<ProductImageMapping>
-                    {
+                    ],
+                Images =
+                    [
                         new ProductImageMapping { ProductId = _RogStrixRx480O8G, ImageId = i_RogStrixRx480O8G, SortOrder = 0, Position = 0 }
-                    },
-                Specifications = new List<ProductSpecificationMapping>
-                    {
-                        new ProductSpecificationMapping { ProductId = _RogStrixRx480O8G, SpecificationId = graphicsEngine, Value = "AMD Radeon RX 480", SortOrder = 0, Position = 0 },
-                        new ProductSpecificationMapping { ProductId = _RogStrixRx480O8G, SpecificationId = videoMemory, Value = "GDDR5 8GB", SortOrder = 0, Position = 1 },
-                        new ProductSpecificationMapping { ProductId = _RogStrixRx480O8G, SpecificationId = engineClock, Value = "1330 MHz (OC Mode)<br />1310 MHz (Gaming Mode)<br />*Retail goods are with default Gaming Mode, OC Mode can be adjusted with one click on GPU Tweak II", SortOrder = 0, Position = 2 },
-                        new ProductSpecificationMapping { ProductId = _RogStrixRx480O8G, SpecificationId = memoryClock, Value = "8000 MHz", SortOrder = 0, Position = 3 },
-                        new ProductSpecificationMapping { ProductId = _RogStrixRx480O8G, SpecificationId = memoryInterface, Value = "256-bit", SortOrder = 0, Position = 4 },
-                        new ProductSpecificationMapping { ProductId = _RogStrixRx480O8G, SpecificationId = resolution, Value = "Digital Max Resolution:7680 x 4320", SortOrder = 0, Position = 5 },
-                        new ProductSpecificationMapping { ProductId = _RogStrixRx480O8G, SpecificationId = _interface, Value = "DVI Output : Yes x 1 (Native) (DVI-D)<br />HDMI Output : Yes x 2 (Native) (HDMI 2.0)<br />Display Port : Yes x 2 (Native) (Regular DP)<br />HDCP Support : Yes", SortOrder = 0, Position = 6 },
-                        new ProductSpecificationMapping { ProductId = _RogStrixRx480O8G, SpecificationId = powerConnectors, Value = "1 x 8-pin", SortOrder = 0, Position = 7 },
-                        new ProductSpecificationMapping { ProductId = _RogStrixRx480O8G, SpecificationId = accessories, Value = "2 x ROG Cable Ties", SortOrder = 0, Position = 8 },
-                        new ProductSpecificationMapping { ProductId = _RogStrixRx480O8G, SpecificationId = software, Value = "ASUS GPU Tweak II & Driver<br />Aura (Graphics Card) Software", SortOrder = 0, Position = 9 },
-                        new ProductSpecificationMapping { ProductId = _RogStrixRx480O8G, SpecificationId = dimensions, Value = "11.73\" x 5.28\" x 1.57\" Inch<br />29.8 x 13.4 x4 Centimeter", SortOrder = 0, Position = 10 }
-                    }
+                    ],
+                Specifications =
+                    [
+                        new() { ProductId = _RogStrixRx480O8G, SpecificationId = graphicsEngine, Value = "AMD Radeon RX 480", SortOrder = 0, Position = 0 },
+                        new() { ProductId = _RogStrixRx480O8G, SpecificationId = videoMemory, Value = "GDDR5 8GB", SortOrder = 0, Position = 1 },
+                        new() { ProductId = _RogStrixRx480O8G, SpecificationId = engineClock, Value = "1330 MHz (OC Mode)<br />1310 MHz (Gaming Mode)<br />*Retail goods are with default Gaming Mode, OC Mode can be adjusted with one click on GPU Tweak II", SortOrder = 0, Position = 2 },
+                        new() { ProductId = _RogStrixRx480O8G, SpecificationId = memoryClock, Value = "8000 MHz", SortOrder = 0, Position = 3 },
+                        new() { ProductId = _RogStrixRx480O8G, SpecificationId = memoryInterface, Value = "256-bit", SortOrder = 0, Position = 4 },
+                        new() { ProductId = _RogStrixRx480O8G, SpecificationId = resolution, Value = "Digital Max Resolution:7680 x 4320", SortOrder = 0, Position = 5 },
+                        new() { ProductId = _RogStrixRx480O8G, SpecificationId = _interface, Value = "DVI Output : Yes x 1 (Native) (DVI-D)<br />HDMI Output : Yes x 2 (Native) (HDMI 2.0)<br />Display Port : Yes x 2 (Native) (Regular DP)<br />HDCP Support : Yes", SortOrder = 0, Position = 6 },
+                        new() { ProductId = _RogStrixRx480O8G, SpecificationId = powerConnectors, Value = "1 x 8-pin", SortOrder = 0, Position = 7 },
+                        new() { ProductId = _RogStrixRx480O8G, SpecificationId = accessories, Value = "2 x ROG Cable Ties", SortOrder = 0, Position = 8 },
+                        new() { ProductId = _RogStrixRx480O8G, SpecificationId = software, Value = "ASUS GPU Tweak II & Driver<br />Aura (Graphics Card) Software", SortOrder = 0, Position = 9 },
+                        new() { ProductId = _RogStrixRx480O8G, SpecificationId = dimensions, Value = "11.73\" x 5.28\" x 1.57\" Inch<br />29.8 x 13.4 x4 Centimeter", SortOrder = 0, Position = 10 }
+                    ]
             };
             _context.Products.Add(product5);
             _context.SaveChanges();
@@ -492,37 +492,37 @@ public class SeedProducts
                 Published = true,
                 DateAdded = DateTime.Now,
                 DateModified = DateTime.Now,
-                Categories = new List<ProductCategoryMapping>
-                    {
+                Categories =
+                    [
                         new ProductCategoryMapping { ProductId = _IntelCorei77700K, CategoryId = processors }
-                    },
-                Manufacturers = new List<ProductManufacturerMapping>
-                    {
+                    ],
+                Manufacturers =
+                    [
                         new ProductManufacturerMapping { ProductId = _IntelCorei77700K, ManufacturerId = intel }
-                    },
-                Images = new List<ProductImageMapping>
-                    {
+                    ],
+                Images =
+                    [
                         new ProductImageMapping { ProductId = _IntelCorei77700K, ImageId = i_IntelCorei77700K, SortOrder = 0, Position = 0 }
-                    },
-                Specifications = new List<ProductSpecificationMapping>
-                    {
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = brand, Value = "Intel", SortOrder = 0, Position = 0 },
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = processorsType, Value = "Desktop", SortOrder = 0, Position = 1 },
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = series, Value = "Core i7 7th Gen", SortOrder = 0, Position = 2 },
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = cpuSocketType, Value = "LGA 1151", SortOrder = 0, Position = 3 },
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = coreName, Value = "Kaby Lake", SortOrder = 0, Position = 4 },
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = numberOfCores, Value = "Quad-Core", SortOrder = 0, Position = 5 },
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = numberOfThreads, Value = "8", SortOrder = 0, Position = 6 },
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = operatingFrequency, Value = "4.2 GHz", SortOrder = 0, Position = 7 },
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = maxTurboFrequency, Value = "4.50 GHz", SortOrder = 0, Position = 8 },
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = l2Cache, Value = "4 x 256KB", SortOrder = 0, Position = 9 },
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = l3Cache, Value = "8MB", SortOrder = 0, Position = 10 },
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = manufacturingTech, Value = "14nm", SortOrder = 0, Position = 11 },
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = bit64Support, Value = "Yes", SortOrder = 0, Position = 12 },
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = hyperThreadingSupport, Value = "Yes", SortOrder = 0, Position = 13 },
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = virtualizationTechnologySupport, Value = "Yes", SortOrder = 0, Position = 14 },
-                        new ProductSpecificationMapping { ProductId = _IntelCorei77700K, SpecificationId = thermalDesignPower, Value = "91W", SortOrder = 0, Position = 15 }
-                    }
+                    ],
+                Specifications =
+                    [
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = brand, Value = "Intel", SortOrder = 0, Position = 0 },
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = processorsType, Value = "Desktop", SortOrder = 0, Position = 1 },
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = series, Value = "Core i7 7th Gen", SortOrder = 0, Position = 2 },
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = cpuSocketType, Value = "LGA 1151", SortOrder = 0, Position = 3 },
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = coreName, Value = "Kaby Lake", SortOrder = 0, Position = 4 },
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = numberOfCores, Value = "Quad-Core", SortOrder = 0, Position = 5 },
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = numberOfThreads, Value = "8", SortOrder = 0, Position = 6 },
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = operatingFrequency, Value = "4.2 GHz", SortOrder = 0, Position = 7 },
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = maxTurboFrequency, Value = "4.50 GHz", SortOrder = 0, Position = 8 },
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = l2Cache, Value = "4 x 256KB", SortOrder = 0, Position = 9 },
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = l3Cache, Value = "8MB", SortOrder = 0, Position = 10 },
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = manufacturingTech, Value = "14nm", SortOrder = 0, Position = 11 },
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = bit64Support, Value = "Yes", SortOrder = 0, Position = 12 },
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = hyperThreadingSupport, Value = "Yes", SortOrder = 0, Position = 13 },
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = virtualizationTechnologySupport, Value = "Yes", SortOrder = 0, Position = 14 },
+                        new() { ProductId = _IntelCorei77700K, SpecificationId = thermalDesignPower, Value = "91W", SortOrder = 0, Position = 15 }
+                    ]
             };
             _context.Products.Add(product6);
             _context.SaveChanges();
@@ -541,34 +541,34 @@ public class SeedProducts
                 Published = true,
                 DateAdded = DateTime.Now,
                 DateModified = DateTime.Now,
-                Categories = new List<ProductCategoryMapping>
-                    {
+                Categories =
+                    [
                         new ProductCategoryMapping { ProductId = _RazerBladeGTX1060, CategoryId = laptop }
-                    },
-                Manufacturers = new List<ProductManufacturerMapping>
-                    {
+                    ],
+                Manufacturers =
+                    [
                         new ProductManufacturerMapping { ProductId = _RazerBladeGTX1060, ManufacturerId = razer }
-                    },
-                Images = new List<ProductImageMapping>
-                    {
+                    ],
+                Images =
+                    [
                         new ProductImageMapping { ProductId = _RazerBladeGTX1060, ImageId = i_TheRazerBladeFront, SortOrder = 0, Position = 0 },
                         new ProductImageMapping { ProductId = _RazerBladeGTX1060, ImageId = i_TheRazerBladeSlide, SortOrder = 0, Position = 1 }
-                    },
-                Specifications = new List<ProductSpecificationMapping>
-                    {
-                        new ProductSpecificationMapping { ProductId = _RazerBladeGTX1060, SpecificationId = processor, Value = "Intel Core i7 7th Gen 7700HQ (2.80 GHz)", SortOrder = 0, Position = 0 },
-                        new ProductSpecificationMapping { ProductId = _RazerBladeGTX1060, SpecificationId = operating, Value = "Windows 10 Home 64-Bit", SortOrder = 0, Position = 1 },
-                        new ProductSpecificationMapping { ProductId = _RazerBladeGTX1060, SpecificationId = memory, Value = "16 GB DDR4 2400", SortOrder = 0, Position = 2 },
-                        new ProductSpecificationMapping { ProductId = _RazerBladeGTX1060, SpecificationId = display, Value = "14.0\" Full HD 1920 x 1080", SortOrder = 0, Position = 3 },
-                        new ProductSpecificationMapping { ProductId = _RazerBladeGTX1060, SpecificationId = graphic, Value = "NVIDIA GeForce GTX 1060 6GB Dedicated Card", SortOrder = 0, Position = 4 },
-                        new ProductSpecificationMapping { ProductId = _RazerBladeGTX1060, SpecificationId = storage, Value = "512 GB SSD", SortOrder = 0, Position = 5 },
-                        new ProductSpecificationMapping { ProductId = _RazerBladeGTX1060, SpecificationId = webCam, Value = "Built-in webcam (2.0MP)", SortOrder = 0, Position = 6 },
-                        new ProductSpecificationMapping { ProductId = _RazerBladeGTX1060, SpecificationId = networking, Value = "802.11ac Wireless LAN</br > Bluetooth 4.1", SortOrder = 0, Position = 7 },
-                        new ProductSpecificationMapping { ProductId = _RazerBladeGTX1060, SpecificationId = _interface, Value = "2 x USB 3.0<br /> 1 x Thunderbolt 3<br /> 1 x HDMI (4K @ 60Hz)", SortOrder = 0, Position = 8 },
-                        new ProductSpecificationMapping { ProductId = _RazerBladeGTX1060, SpecificationId = battery, Value = "Built-in 70 Wh rechargeable lithium-ion polymer battery", SortOrder = 0, Position = 9 },
-                        new ProductSpecificationMapping { ProductId = _RazerBladeGTX1060, SpecificationId = dimensions, Value = "13.60\" x 9.30\" x 0.70\" (WxDxH)", SortOrder = 0, Position = 10 },
-                        new ProductSpecificationMapping { ProductId = _RazerBladeGTX1060, SpecificationId = weight, Value = "4.10 lbs.", SortOrder = 0, Position = 11 }
-                    }
+                    ],
+                Specifications =
+                    [
+                        new() { ProductId = _RazerBladeGTX1060, SpecificationId = processor, Value = "Intel Core i7 7th Gen 7700HQ (2.80 GHz)", SortOrder = 0, Position = 0 },
+                        new() { ProductId = _RazerBladeGTX1060, SpecificationId = operating, Value = "Windows 10 Home 64-Bit", SortOrder = 0, Position = 1 },
+                        new() { ProductId = _RazerBladeGTX1060, SpecificationId = memory, Value = "16 GB DDR4 2400", SortOrder = 0, Position = 2 },
+                        new() { ProductId = _RazerBladeGTX1060, SpecificationId = display, Value = "14.0\" Full HD 1920 x 1080", SortOrder = 0, Position = 3 },
+                        new() { ProductId = _RazerBladeGTX1060, SpecificationId = graphic, Value = "NVIDIA GeForce GTX 1060 6GB Dedicated Card", SortOrder = 0, Position = 4 },
+                        new() { ProductId = _RazerBladeGTX1060, SpecificationId = storage, Value = "512 GB SSD", SortOrder = 0, Position = 5 },
+                        new() { ProductId = _RazerBladeGTX1060, SpecificationId = webCam, Value = "Built-in webcam (2.0MP)", SortOrder = 0, Position = 6 },
+                        new() { ProductId = _RazerBladeGTX1060, SpecificationId = networking, Value = "802.11ac Wireless LAN</br > Bluetooth 4.1", SortOrder = 0, Position = 7 },
+                        new() { ProductId = _RazerBladeGTX1060, SpecificationId = _interface, Value = "2 x USB 3.0<br /> 1 x Thunderbolt 3<br /> 1 x HDMI (4K @ 60Hz)", SortOrder = 0, Position = 8 },
+                        new() { ProductId = _RazerBladeGTX1060, SpecificationId = battery, Value = "Built-in 70 Wh rechargeable lithium-ion polymer battery", SortOrder = 0, Position = 9 },
+                        new() { ProductId = _RazerBladeGTX1060, SpecificationId = dimensions, Value = "13.60\" x 9.30\" x 0.70\" (WxDxH)", SortOrder = 0, Position = 10 },
+                        new() { ProductId = _RazerBladeGTX1060, SpecificationId = weight, Value = "4.10 lbs.", SortOrder = 0, Position = 11 }
+                    ]
             };
             _context.Products.Add(product7);
             _context.SaveChanges();
@@ -587,36 +587,36 @@ public class SeedProducts
                 Published = true,
                 DateAdded = DateTime.Now,
                 DateModified = DateTime.Now,
-                Categories = new List<ProductCategoryMapping>
-                    {
+                Categories =
+                    [
                         new ProductCategoryMapping { ProductId = _AmdRyzen71800X, CategoryId = processors }
-                    },
-                Manufacturers = new List<ProductManufacturerMapping>
-                    {
+                    ],
+                Manufacturers =
+                    [
                         new ProductManufacturerMapping { ProductId = _AmdRyzen71800X, ManufacturerId = amd }
-                    },
-                Images = new List<ProductImageMapping>
-                    {
+                    ],
+                Images =
+                    [
                         new ProductImageMapping { ProductId = _AmdRyzen71800X, ImageId = i_Ryzen71800x, SortOrder = 0, Position = 0 }
-                    },
-                Specifications = new List<ProductSpecificationMapping>
-                    {
-                        new ProductSpecificationMapping { ProductId = _AmdRyzen71800X, SpecificationId = brand, Value = "AMD", SortOrder = 0, Position = 0 },
-                        new ProductSpecificationMapping { ProductId = _AmdRyzen71800X, SpecificationId = processorsType, Value = "Desktop", SortOrder = 0, Position = 1 },
-                        new ProductSpecificationMapping { ProductId = _AmdRyzen71800X, SpecificationId = series, Value = "Ryzen 7", SortOrder = 0, Position = 2 },
-                        new ProductSpecificationMapping { ProductId = _AmdRyzen71800X, SpecificationId = cpuSocketType, Value = "Socket AM4", SortOrder = 0, Position = 3 },
-                        new ProductSpecificationMapping { ProductId = _AmdRyzen71800X, SpecificationId = coreName, Value = "Summit Ridge", SortOrder = 0, Position = 4 },
-                        new ProductSpecificationMapping { ProductId = _AmdRyzen71800X, SpecificationId = numberOfCores, Value = "8-Core", SortOrder = 0, Position = 5 },
-                        new ProductSpecificationMapping { ProductId = _AmdRyzen71800X, SpecificationId = numberOfThreads, Value = "16", SortOrder = 0, Position = 6 },
-                        new ProductSpecificationMapping { ProductId = _AmdRyzen71800X, SpecificationId = operatingFrequency, Value = "3.6 GHz", SortOrder = 0, Position = 7 },
-                        new ProductSpecificationMapping { ProductId = _AmdRyzen71800X, SpecificationId = maxTurboFrequency, Value = "4.0 GHz", SortOrder = 0, Position = 8 },
-                        new ProductSpecificationMapping { ProductId = _AmdRyzen71800X, SpecificationId = l2Cache, Value = "4MB", SortOrder = 0, Position = 9 },
-                        new ProductSpecificationMapping { ProductId = _AmdRyzen71800X, SpecificationId = l3Cache, Value = "16MB", SortOrder = 0, Position = 10 },
-                        new ProductSpecificationMapping { ProductId = _AmdRyzen71800X, SpecificationId = manufacturingTech, Value = "14nm", SortOrder = 0, Position = 11 },
-                        new ProductSpecificationMapping { ProductId = _AmdRyzen71800X, SpecificationId = virtualizationTechnologySupport, Value = "Yes", SortOrder = 0, Position = 12 },
-                        new ProductSpecificationMapping { ProductId = _AmdRyzen71800X, SpecificationId = thermalDesignPower, Value = "95W", SortOrder = 0, Position = 13 },
-                        new ProductSpecificationMapping { ProductId = _AmdRyzen71800X, SpecificationId = coolingDevice, Value = "Cooling device not included - Processor Only", SortOrder = 0, Position = 14 }
-                    }
+                    ],
+                Specifications =
+                    [
+                        new() { ProductId = _AmdRyzen71800X, SpecificationId = brand, Value = "AMD", SortOrder = 0, Position = 0 },
+                        new() { ProductId = _AmdRyzen71800X, SpecificationId = processorsType, Value = "Desktop", SortOrder = 0, Position = 1 },
+                        new() { ProductId = _AmdRyzen71800X, SpecificationId = series, Value = "Ryzen 7", SortOrder = 0, Position = 2 },
+                        new() { ProductId = _AmdRyzen71800X, SpecificationId = cpuSocketType, Value = "Socket AM4", SortOrder = 0, Position = 3 },
+                        new() { ProductId = _AmdRyzen71800X, SpecificationId = coreName, Value = "Summit Ridge", SortOrder = 0, Position = 4 },
+                        new() { ProductId = _AmdRyzen71800X, SpecificationId = numberOfCores, Value = "8-Core", SortOrder = 0, Position = 5 },
+                        new() { ProductId = _AmdRyzen71800X, SpecificationId = numberOfThreads, Value = "16", SortOrder = 0, Position = 6 },
+                        new() { ProductId = _AmdRyzen71800X, SpecificationId = operatingFrequency, Value = "3.6 GHz", SortOrder = 0, Position = 7 },
+                        new() { ProductId = _AmdRyzen71800X, SpecificationId = maxTurboFrequency, Value = "4.0 GHz", SortOrder = 0, Position = 8 },
+                        new() { ProductId = _AmdRyzen71800X, SpecificationId = l2Cache, Value = "4MB", SortOrder = 0, Position = 9 },
+                        new() { ProductId = _AmdRyzen71800X, SpecificationId = l3Cache, Value = "16MB", SortOrder = 0, Position = 10 },
+                        new() { ProductId = _AmdRyzen71800X, SpecificationId = manufacturingTech, Value = "14nm", SortOrder = 0, Position = 11 },
+                        new() { ProductId = _AmdRyzen71800X, SpecificationId = virtualizationTechnologySupport, Value = "Yes", SortOrder = 0, Position = 12 },
+                        new() { ProductId = _AmdRyzen71800X, SpecificationId = thermalDesignPower, Value = "95W", SortOrder = 0, Position = 13 },
+                        new() { ProductId = _AmdRyzen71800X, SpecificationId = coolingDevice, Value = "Cooling device not included - Processor Only", SortOrder = 0, Position = 14 }
+                    ]
             };
             _context.Products.Add(product8);
             _context.SaveChanges();
@@ -638,39 +638,39 @@ public class SeedProducts
                 Published = true,
                 DateAdded = DateTime.Now,
                 DateModified = DateTime.Now,
-                Categories = new List<ProductCategoryMapping>
-                    {
+                Categories =
+                    [
                         new ProductCategoryMapping { ProductId = _LogitechG502, CategoryId = mouse }
-                    },
-                Manufacturers = new List<ProductManufacturerMapping>
-                    {
+                    ],
+                Manufacturers =
+                    [
                         new ProductManufacturerMapping { ProductId = _LogitechG502, ManufacturerId = logitech }
-                    },
-                Images = new List<ProductImageMapping>
-                    {
+                    ],
+                Images =
+                    [
                         new ProductImageMapping { ProductId = _LogitechG502, ImageId = i_LogitechG502Main, SortOrder = 0, Position = 0 },
                         new ProductImageMapping { ProductId = _LogitechG502, ImageId = i_LogitechG502Side, SortOrder = 0, Position = 1 },
                         new ProductImageMapping { ProductId = _LogitechG502, ImageId = i_LogitechG502Bottom, SortOrder = 0, Position = 2 }
-                    },
-                Specifications = new List<ProductSpecificationMapping>
-                    {
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = brand, Value = "Logitech", SortOrder = 0, Position = 0 },
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = name, Value = "G502", SortOrder = 0, Position = 1 },
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = model, Value = "910-004615", SortOrder = 0, Position = 2 },
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = type, Value = "Wired", SortOrder = 0, Position = 3 },
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = _interface, Value = "USB", SortOrder = 0, Position = 4 },
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = mouseGripStyle, Value = "Fingertip", SortOrder = 0, Position = 5 },
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = trackingMethod, Value = "Optical", SortOrder = 0, Position = 6 },
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = maximumDpi, Value = "12000 dpi", SortOrder = 0, Position = 7 },
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = handOrientation, Value = "Right Hand", SortOrder = 0, Position = 8 },
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = buttons, Value = "11", SortOrder = 0, Position = 9 },
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = mouseAdjustableWeight, Value = "5 x 3.6 g weights", SortOrder = 0, Position = 10 },
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = scrollingCapability, Value = "Tilt Wheel", SortOrder = 0, Position = 11 },
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = color, Value = "Black", SortOrder = 0, Position = 12 },
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = operatingSystemSupported, Value = "Windows 10, Windows 8.1, Windows 8, Windows 7", SortOrder = 0, Position = 13 },
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = systemRequirement, Value = "USB port<br /> Internet connection for optional software download", SortOrder = 0, Position = 14 },
-                        new ProductSpecificationMapping { ProductId = _LogitechG502, SpecificationId = features, Value = "Accurate responsive optical sensor<br /> Balance And Weight At Your Control<br /> Programmable RGB Lighting<br /> Personally-tuned performance<br /> 11 Programmable buttons<br /> DPI Shift In-game<br /> Dual-mode, Gaming-grade Scroll Wheel<br /> Our most accurate sensor on the market<br /> 32-bit microcontroller<br /> 3 on-board profiles<br /> 1 millisecond report rate<br /> Primary buttons rated to 20 million clicks<br /> Mechanical microswitches<br /> Improved keyplate design for better click feeling and performance<br /> Braided cable with hook and loop cable tie<br /> Sleep mode disabled<br /> 3 DPI indicator LEDs<br /> Rubber grips<br /> Magnetic weight-cavity door<br />", SortOrder = 0, Position = 15 }
-                    }
+                    ],
+                Specifications =
+                    [
+                        new() { ProductId = _LogitechG502, SpecificationId = brand, Value = "Logitech", SortOrder = 0, Position = 0 },
+                        new() { ProductId = _LogitechG502, SpecificationId = name, Value = "G502", SortOrder = 0, Position = 1 },
+                        new() { ProductId = _LogitechG502, SpecificationId = model, Value = "910-004615", SortOrder = 0, Position = 2 },
+                        new() { ProductId = _LogitechG502, SpecificationId = type, Value = "Wired", SortOrder = 0, Position = 3 },
+                        new() { ProductId = _LogitechG502, SpecificationId = _interface, Value = "USB", SortOrder = 0, Position = 4 },
+                        new() { ProductId = _LogitechG502, SpecificationId = mouseGripStyle, Value = "Fingertip", SortOrder = 0, Position = 5 },
+                        new() { ProductId = _LogitechG502, SpecificationId = trackingMethod, Value = "Optical", SortOrder = 0, Position = 6 },
+                        new() { ProductId = _LogitechG502, SpecificationId = maximumDpi, Value = "12000 dpi", SortOrder = 0, Position = 7 },
+                        new() { ProductId = _LogitechG502, SpecificationId = handOrientation, Value = "Right Hand", SortOrder = 0, Position = 8 },
+                        new() { ProductId = _LogitechG502, SpecificationId = buttons, Value = "11", SortOrder = 0, Position = 9 },
+                        new() { ProductId = _LogitechG502, SpecificationId = mouseAdjustableWeight, Value = "5 x 3.6 g weights", SortOrder = 0, Position = 10 },
+                        new() { ProductId = _LogitechG502, SpecificationId = scrollingCapability, Value = "Tilt Wheel", SortOrder = 0, Position = 11 },
+                        new() { ProductId = _LogitechG502, SpecificationId = color, Value = "Black", SortOrder = 0, Position = 12 },
+                        new() { ProductId = _LogitechG502, SpecificationId = operatingSystemSupported, Value = "Windows 10, Windows 8.1, Windows 8, Windows 7", SortOrder = 0, Position = 13 },
+                        new() { ProductId = _LogitechG502, SpecificationId = systemRequirement, Value = "USB port<br /> Internet connection for optional software download", SortOrder = 0, Position = 14 },
+                        new() { ProductId = _LogitechG502, SpecificationId = features, Value = "Accurate responsive optical sensor<br /> Balance And Weight At Your Control<br /> Programmable RGB Lighting<br /> Personally-tuned performance<br /> 11 Programmable buttons<br /> DPI Shift In-game<br /> Dual-mode, Gaming-grade Scroll Wheel<br /> Our most accurate sensor on the market<br /> 32-bit microcontroller<br /> 3 on-board profiles<br /> 1 millisecond report rate<br /> Primary buttons rated to 20 million clicks<br /> Mechanical microswitches<br /> Improved keyplate design for better click feeling and performance<br /> Braided cable with hook and loop cable tie<br /> Sleep mode disabled<br /> 3 DPI indicator LEDs<br /> Rubber grips<br /> Magnetic weight-cavity door<br />", SortOrder = 0, Position = 15 }
+                    ]
 
             };
             _context.Products.Add(product9);

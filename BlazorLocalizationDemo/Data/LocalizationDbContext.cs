@@ -1,4 +1,4 @@
-using BlazorLocalizationDemo.Entity;
+using BlazorLocalizationDemo.Data.Entity.Localization;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazorLocalizationDemo.Data;

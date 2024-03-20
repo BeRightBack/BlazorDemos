@@ -1,6 +1,6 @@
-using BlazorLocalizationDemo.Entity;
+using BlazorLocalizationDemo.Data.Entity.Localization;
 
-namespace BlazorLocalizationDemo.Services;
+namespace BlazorLocalizationDemo.Services.Localization;
 
 public interface ILocalizationService
 {

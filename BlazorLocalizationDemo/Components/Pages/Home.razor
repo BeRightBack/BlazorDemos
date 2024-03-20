@@ -1,4 +1,11 @@
 ﻿@page "/"
+@using BlazorLocalizationDemo.Models
+@using System.ComponentModel.DataAnnotations
+
+@inject IStringLocalizer<SharedResource> Localizer
+
+@Thread.CurrentThread.CurrentCulture;
+@Thread.CurrentThread.CurrentUICulture;
 
 <PageTitle>@Localizer["Home"]</PageTitle>
 
@@ -6,4 +13,67 @@
 
 @Localizer["Welcome to your new app."]
 
-@Localizer["This is a test"]
+<div>
+    <EditForm Model="person" OnValidSubmit="OnSubmit">        
+        <DataAnnotationsValidator />
+        <ValidationSummary class="text-danger" role="alert" />
+        <div class="form-floating mb-2">            
+            <InputText @bind-Value="person!.Name" class="form-control form-control-sm" autocomplete="name" aria-required="true" placeholder="name" />
+            <Label TModel="Person" For="@( (Person p) => (object?)p.Name )" />
+            <ValidationMessage For="() => person.Name" class="text-danger" />            
+        </div>  
+        <div class="form-floating mb-2">
+            <InputText @bind-Value="person.UserName" class="form-control form-control-sm" autocomplete="username" aria-required="true" placeholder="username" />
+            <Label TModel="Person" For="@( (Person p) => (object?)p.UserName )" />
+            <ValidationMessage For="() => person.UserName" class="text-danger" />
+        </div>
+        <div class="form-floating mb-2 text-sm-start">
+            <InputText @bind-Value="person.FirstName" class="form-control form-control-sm" autocomplete="given-name" aria-required="true" placeholder="first name" />
+            <Label TModel="Person" For="@( (Person p) => (object?)p.FirstName )" />
+            <ValidationMessage For="() => person.FirstName" class="text-danger" />
+        </div>
+        <div class="form-floating mb-2">
+            <InputText @bind-Value="person.LastName" class=" form-control form-control-sm" autocomplete="family-name" aria-required="true" placeholder="last name" />
+            <Label TModel="Person" For="@( (Person p) => (object?)p.LastName )" />
+            <ValidationMessage For="() => person.LastName" class="text-danger" />
+        </div>
+        <div class="form-floating mb-2">
+            <InputText type="email" @bind-Value="person.Email" class="form-control form-control-sm" autocomplete="email" aria-required="true" placeholder="email" />
+            <Label TModel="Person" For="@( (Person p) => (object?)p.Email )" />
+            <ValidationMessage For="() => person.Email" class="text-danger" />
+        </div>
+        <div class="form-floating mb-2">
+            <InputText type="password" @bind-Value="person.Password" class=" form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="password" />
+            <Label TModel="Person" For="@( (Person p) => (object?)p.Password )" />
+            <ValidationMessage For="() => person.Password" class="text-danger" />
+        </div>
+        <div class="form-floating mb-2">
+            <InputText type="password" @bind-Value="person.ConfirmPassword" class=" form-control form-control-sm" autocomplete="new-password" aria-required="true" placeholder="password" />
+            <Label TModel="Person" For="@( (Person p) => (object?)p.ConfirmPassword )" />
+            <ValidationMessage For="() => person.ConfirmPassword" class="text-danger" />
+        </div>
+        <div>
+            <button class="btn btn-sm btn-primary">@Localizer["Do Validation"]</button>
+        </div>
+    </EditForm>
+</div>
+
+   
+
+@code
+{
+    Person? person;
+    //string? nameDisplayName;
+
+    protected override void OnInitialized()
+    {
+        person = new Person();
+        //nameDisplayName = Localizer.GetLocalizedName<Person>("Name");
+        //var nameDisplayName = new DisplayAttribute { Name = "NameDisplayed" }.GetLocalizedName(Localizer);
+
+    }
+
+    private void OnSubmit()
+    {
+    }
+}

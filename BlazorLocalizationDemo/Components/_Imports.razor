@@ -13,11 +13,11 @@
 @using BlazorLocalizationDemo.Components
 @using BlazorLocalizationDemo.Components.Culture
 @using BlazorLocalizationDemo.Data
-@using BlazorLocalizationDemo.Entity
-@using BlazorLocalizationDemo.Repository
+@using BlazorLocalizationDemo.Data.Entity.Localization
+@using BlazorLocalizationDemo.Data.Repository
 @using BlazorLocalizationDemo.Services
-@using global::Resources
 @using DeepL;
+@using BlazorLocalizationDemo.Resources;
 @inject Translator Translator
 @inject IStringLocalizer<SharedResource> Localizer
 @inject NavigationManager NavigationManager
