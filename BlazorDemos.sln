@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Item", "Solution I
 		ReadMe.txt = ReadMe.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorJwtDemo", "BlazorJwtDemo\BlazorJwtDemo.csproj", "{4C778EB5-4C3F-4A32-A7B4-224637B95FDF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,10 +38,6 @@ Global
 		{9E5C37E3-1C4E-4FF0-9CC7-E399395802E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E5C37E3-1C4E-4FF0-9CC7-E399395802E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E5C37E3-1C4E-4FF0-9CC7-E399395802E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C778EB5-4C3F-4A32-A7B4-224637B95FDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C778EB5-4C3F-4A32-A7B4-224637B95FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C778EB5-4C3F-4A32-A7B4-224637B95FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C778EB5-4C3F-4A32-A7B4-224637B95FDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
